@@ -1,0 +1,461 @@
+﻿@charset "UTF-8";
+
+/*
+   Icons
+
+    Generated from https://icomoon.io/app/
+    selection.json in Content/fonts
+   ========================================================================== */
+
+[class^="icon-"], [class*=" icon-"], .icon {
+    font-family: 'bupa-iconfonts';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+$icons: (chevron-right: "", arrow-right: "", arrow-down: "");
+
+// usage: @include icon-font(icon-ba-chevron-right);
+@mixin icon-font($name) {
+    &:before {
+        content: #{map-get($icons, $name)};
+    }
+}
+
+// usage: @include icon-font-attr(icon-ba-chevron-right);
+@mixin icon-font-attr($name) {
+    content: #{map-get($icons, $name)};
+}
+
+.icon-info-row-country-india:before {
+    content: "\e638";
+}
+
+.icon-info-row-country-australia:before {
+    content: "\e636";
+}
+
+.icon-info-row-country-hong-kong:before {
+    content: "\e637";
+}
+
+.icon-info-row-country-malta:before {
+    content: "\e639";
+}
+
+.icon-info-row-country-poland:before {
+    content: "\e63a";
+}
+
+.icon-info-row-country-saudi-arabia:before {
+    content: "\e63b";
+}
+
+.icon-info-row-country-spain:before {
+    content: "\e63c";
+}
+
+.icon-info-row-country-thailand:before {
+    content: "\e63d";
+}
+
+.icon-info-row-country-uk:before {
+    content: "\e63e";
+}
+
+.icon-info-row-247-support:before {
+    content: "\e631";
+}
+
+.icon-info-row-big-small-business:before {
+    content: "\e632";
+}
+
+.icon-info-row-business:before {
+    content: "\e633";
+}
+
+.icon-info-row-cancer-treatment:before {
+    content: "\e634";
+}
+
+.icon-info-row-care:before {
+    content: "\e635";
+}
+
+.icon-info-row-dental:before {
+    content: "\e63f";
+}
+
+.icon-info-row-doctor:before {
+    content: "\e640";
+}
+
+.icon-info-row-emergency-treatment:before {
+    content: "\e641";
+}
+
+.icon-info-row-evacuation:before {
+    content: "\e642";
+}
+
+.icon-info-row-globe:before {
+    content: "\e643";
+}
+
+.icon-info-row-highlights-small:before {
+    content: "\e644";
+}
+
+.icon-info-row-home-cover:before {
+    content: "\e645";
+}
+
+.icon-info-row-maternity:before {
+    content: "\e646";
+}
+
+.icon-info-row-online:before {
+    content: "\e647";
+}
+
+.icon-info-row-specialist-support:before {
+    content: "\e648";
+}
+
+.icon-info-row-stethoscope:before {
+    content: "\e649";
+}
+
+.icon-info-row-transplant:before {
+    content: "\e64a";
+}
+
+.icon-info-row-travel-insurance:before {
+    content: "\e64b";
+}
+
+.icon-info-row-wellbeing-small:before {
+    content: "\e64c";
+}
+
+.icon-chevron-down:before {
+    content: "\e623";
+}
+
+.icon-chevron-left:before {
+    content: "\e627";
+}
+
+.icon-chevron-right:before {
+    content: "\e628";
+}
+
+.icon-chevron-up:before {
+    content: "\e629";
+}
+
+.icon-close-ver-2:before {
+    content: "\e62a";
+}
+
+.icon-download:before {
+    content: "\e62b";
+}
+
+.icon-external-link:before {
+    content: "\e62c";
+}
+
+.icon-info-ver-2:before {
+    content: "\e62d";
+}
+
+.icon-remove-person:before {
+    content: "\e62e";
+}
+
+.icon-scrollbar:before {
+    content: "\e62f";
+}
+
+.icon-warning:before {
+    content: "\e630";
+}
+
+.icon-info-col-247-support:before {
+    content: "\e64d";
+}
+
+.icon-info-col-employees:before {
+    content: "\e64e";
+}
+
+.icon-info-col-facilities:before {
+    content: "\e64f";
+}
+
+.icon-info-col-globe:before {
+    content: "\e650";
+}
+
+.icon-info-col-group-people:before {
+    content: "\e651";
+}
+
+.icon-info-col-more-than:before {
+    content: "\e652";
+}
+
+.icon-info-col-second-opinion:before {
+    content: "\e653";
+}
+
+.icon-info-col-segmented-benefits:before {
+    content: "\e654";
+}
+
+.icon-info-col-stethoscope:before {
+    content: "\e655";
+}
+
+.icon-info-col-wellbeing-healthchecks:before {
+    content: "\e656";
+}
+
+.icon-elig-avatar:before {
+    content: "\e657";
+}
+
+.icon-elig-avatar-add:before {
+    content: "\e658";
+}
+
+.icon-elig-avatar-child:before {
+    content: "\e659";
+}
+
+.icon-elig-avatar-family:before {
+    content: "\e65a";
+}
+
+.icon-elig-avatar-people:before {
+    content: "\e65b";
+}
+
+.icon-elig-remove-person:before {
+    content: "\e65c";
+}
+
+.icon-bupa-logo:before {
+    content: "\e65d";
+}
+
+.icon-accord-baby:before {
+    content: "\e65e";
+}
+
+.icon-accord-dental-hear:before {
+    content: "\e65f";
+}
+
+.icon-accord-evacuation:before {
+    content: "\e660";
+}
+
+.icon-accord-exclusions:before {
+    content: "\e661";
+}
+
+.icon-accord-hospice:before {
+    content: "\e662";
+}
+
+.icon-accord-inpatient:before {
+    content: "\e663";
+}
+
+.icon-accord-nurse:before {
+    content: "\e664";
+}
+
+.icon-accord-outpatient:before {
+    content: "\e665";
+}
+
+.icon-accord-stethoscopes:before {
+    content: "\e666";
+}
+
+.icon-play:before {
+    content: "\e626";
+}
+
+.icon-arrow:before {
+    content: "\e612";
+}
+
+.icon-generic:before {
+    content: "\e624";
+}
+
+.icon-telephone:before {
+    content: "\e625";
+}
+
+.icon-arrow-down:before {
+    content: "\e601";
+}
+
+.icon-arrow-up:before {
+    content: "\e60f";
+}
+
+.icon-arrow-left:before {
+    content: "\e610";
+}
+
+.icon-arrow-right:before {
+    content: "\e611";
+}
+
+.icon-info:before {
+    content: "\e602";
+}
+
+.icon-thin-close:before {
+    content: "\e620";
+}
+
+.icon-zoom-in:before {
+    content: "\e621";
+}
+
+.icon-zoom-out:before {
+    content: "\e622";
+}
+
+.icon-check-circled:before {
+    content: "\e61f";
+}
+
+.icon-laboratory:before {
+    content: "\e604";
+}
+
+.icon-location-map:before {
+    content: "\e606";
+}
+
+.icon-globe:before {
+    content: "\e61d";
+}
+
+.icon-phone:before {
+    content: "\e609";
+}
+
+.icon-clinic:before {
+    content: "\e600";
+}
+
+.icon-consultant:before {
+    content: "\e608";
+}
+
+.icon-dental:before {
+    content: "\e607";
+}
+
+.icon-dentalclinic:before {
+    content: "\e607";
+}
+
+.icon-hospital-ver-2:before {
+    content: "\e61e";
+}
+
+.icon-results-list:before {
+    content: "\e61a";
+}
+
+.icon-other:before {
+    content: "\e61b";
+}
+
+.icon-otherproviders:before {
+    content: "\e61b";
+}
+
+.icon-pharmacy:before {
+    content: "\e61c";
+}
+
+.icon-hospital:before {
+    content: "\e603";
+}
+
+.icon-search:before {
+    content: "\e60a";
+}
+
+.icon-check:before {
+    content: "\e617";
+}
+
+.icon-pin:before {
+    content: "\e615";
+}
+
+.icon-search-thin:before {
+    content: "\e605";
+}
+
+.icon-search-filter:before {
+    content: "\e616";
+}
+
+.icon-search-filter-inverted:before {
+    content: "\e618";
+}
+
+.icon-star:before {
+    content: "\e619";
+}
+
+.icon-bupa-logo-mark:before {
+    content: "\e613";
+}
+
+.icon-close:before {
+    content: "\e614";
+}
+
+.icon-location:before {
+    content: "\e60b";
+}
+
+.icon-menu:before {
+    content: "\e60c";
+}
+
+.icon-login:before {
+    content: "\e60d";
+}
+
+.icon-lang:before {
+    content: "\e60e";
+}
+
+.inline-icon {
+    float: left;
+    font-size: 30px;
+}
+

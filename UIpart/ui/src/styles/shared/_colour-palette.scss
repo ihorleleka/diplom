@@ -1,0 +1,43 @@
+$palette:
+(
+    "Orange" $orange-1,
+    "Gold" $gold,
+    "Silver" $silver,
+    "Cyan" $cyan,
+    "Navy" $navy,
+    "Black" $black,
+    "Charcoal" $charcoal,
+    "Slate" $slate,
+    "White" $white,
+    "Teal" $teal,
+    "Plum" $plum,
+    "Aubergine" $aubergine,
+    "Frost" $frost,
+    "Lavender" $lavender,
+    "Lilac" $lilac,
+    "Fig" $fig,
+    "Sky-Blue" $sky-blue,
+    "Terracotta" $terracotta,
+    "Pumpkin" $pumpkin,
+    "Ocean" $ocean,
+    "Fog" $fog,
+    "Olive" $olive,
+    "Highland-Green" $highland-green,
+    "Sage" $sage,
+    "Koala-Grey" $koala-grey,
+);
+
+
+// alternative usage
+// @function get-colour($colour) {
+
+//   @if map-has-key($colours, $colour) {
+//     $colour: map-get($colours, $colour);
+//   } @else {
+//     @if type-of($colour) != colour {
+//       @error "Colour name: `#{$colour}` not found.";
+//     }
+//   }
+
+//   @return $colour;
+// }

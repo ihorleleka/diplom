@@ -1,0 +1,6 @@
+﻿.container {
+    .container {
+        // It fixes nested container from using modules in two columns layouts
+        width: 100%;
+    }
+}

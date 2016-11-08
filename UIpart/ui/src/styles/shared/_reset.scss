@@ -1,0 +1,97 @@
+/*html { 
+    font-size: 62.5%; 
+}*/ 
+
+body {
+    font-family: "Gotham A","Gotham B",Arial,serif;
+    color: #3f3f3f;
+    -webkit-font-smoothing: antialiased;
+    font-size: 1.4rem;
+}
+
+/*h1,h2,h3,h4,h5,h6{
+    margin:0px;
+}*/
+
+ul, ol {
+    margin: 0;
+    padding: 0;
+
+    li {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+}
+
+p {
+    margin:0px 0px 20px 0px;
+    line-height: 2.5rem;
+    line-height: 25px;
+}
+
+a {
+    @include hacks();
+    @include prefixed(transition, all .35s ease);
+    cursor:pointer;
+    
+    &:hover, &:focus, &:active{
+        text-decoration:none;
+    }
+}
+
+.content {
+    padding-top:80px;
+    width: 100%;
+    display: inline-block;
+
+    @media (max-width: $screen-xs-min) {
+          padding-top:70px;
+    }
+
+
+    @media (min-width: $screen-md-min) {
+        padding-top: 121px;
+    }
+
+    &.push-down {
+
+        @media (min-width: $screen-md-min) {
+            padding-top: 176px;
+        }
+
+    }
+
+}
+
+section{
+    margin-bottom:0px;
+
+    @media (min-width: $screen-sm-min) {
+        margin-bottom: 0px;
+    }
+}
+
+//form styling
+
+select {
+    -moz-appearance: initial;
+    -webkit-appearance: none;
+}
+
+.hidden-field {
+    display:none;
+}
+
+.no-padding {
+    padding: 0 !important;
+}
+
+.no-border {
+    border: none !important;
+}
+
+.tealiumResponseTap {
+    visibility: hidden;
+    display: none;
+}

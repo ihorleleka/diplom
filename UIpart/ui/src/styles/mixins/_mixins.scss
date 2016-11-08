@@ -1,0 +1,401 @@
+// Browser Prefixes - Which CSS prefixes should be used?
+$webkit: true !default;
+$moz: false !default;
+$ms: false !default;
+$o: false !default;
+
+// prefix declarations
+@mixin prefixed($property, $value) {
+  @if $webkit == true {
+    -webkit-#{$property}: #{$value};
+  }
+
+  @if $moz == true {
+    -moz-#{$property}: #{$value};
+  }
+
+  @if $ms == true {
+    -ms-#{$property}: #{$value};
+  }
+
+  @if $o == true {
+    -o-#{$property}: #{$value};
+  }
+
+  #{$property}: #{$value};
+}
+
+@mixin animation($animate...) {
+
+    $max: length($animate);
+    $animations: '';
+
+    @for $i from 1 through $max {
+
+        $animations: #{$animations + nth($animate, $i)};
+
+        @if $i < $max {
+            $animations: #{$animations + ", "};
+        }
+    }
+
+    -webkit-animation: $animations;
+    -moz-animation:    $animations;
+    -o-animation:      $animations;
+    animation:         $animations;
+}
+
+@mixin keyframes($animationName) {
+
+    @-webkit-keyframes #{$animationName} {
+        @content;
+    }
+
+    @-moz-keyframes #{$animationName} {
+        @content;
+    }
+
+    @-o-keyframes #{$animationName} {
+        @content;
+    }
+
+    @keyframes #{$animationName} {
+        @content;
+    }
+
+}
+
+@mixin font-size($sizeValue: 1.6) {
+  font-size: ($sizeValue * 10) + px;
+  font-size: $sizeValue + rem;
+}
+
+@mixin font($sizeValue: 1.6, $line-height: 20, $font-weight: 300) {
+  font-size: ($sizeValue * 10) + px;
+  font-size: $sizeValue + rem;
+  line-height: ($line-height * 10) + px;
+  line-height: $line-height + rem;
+  font-weight: $font-weight;
+
+}
+
+@mixin hardwareAccel() {
+  // Improve performance on mobile/tablet devices
+  @include prefixed(transform, translateZ(0));
+}
+
+@mixin improveAntiAlias() {
+  // Improve aliasing on mobile/tablet devices
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+}
+
+@mixin fontSmooth() {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@mixin forceBlockLevel() {
+  // Transforms need to be block-level to work
+  display: inline-block;
+  vertical-align: middle;
+}
+
+@mixin hacks() {
+  //@include forceBlockLevel();
+  @include hardwareAccel();
+  @include improveAntiAlias();
+  @include fontSmooth();
+}
+
+@mixin vertical-align {
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+@mixin placeholder {
+    ::-webkit-input-placeholder {@content}
+    :-moz-placeholder           {@content}
+    ::-moz-placeholder          {@content}
+    :-ms-input-placeholder      {@content}
+}
+
+
+@mixin button($bg: $brand-primary, $color: $white, $padding: 20px, $display: block, $margin: 0) {
+    background: $bg;
+    color: $color;
+    padding: $padding;
+    text-decoration: none;
+    font-size: 2em;
+    display: $display;
+    margin: $margin;
+
+    &:hover {
+        background:darken($bg,8%);
+        color: $color;
+        transition: all 0.3s ease;
+    }
+    &:active {
+        background:darken($bg,25%);
+    }
+}
+
+@mixin product-header-template($colorClass, $color) {
+    &.#{$colorClass} {
+        .product-header {
+            background-color: $color;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            h3 {
+                @extend %h5;
+                color: $white;
+                text-align: center;
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    .benefits-list {
+        li {
+            &:before {
+                color: $color;
+            }
+        }
+    }
+}
+
+.btn-brand-primary {
+    @include button($brand-primary, $white, 10px 20px, inline-block, 20px 0 0 0);
+}
+
+@mixin quote-cta-template($colorClass, $color) {
+    &.#{$colorClass} {
+        background: $color;
+        &.loading {
+            background-image: url("/assets/images/preloader_white.gif");
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: 26px;
+
+            &:before {
+                display: none;
+            }
+
+            * {
+                visibility: hidden;
+            }
+        }
+
+        // &[disabled] {
+        //   background-color: $koala-grey;
+        // }
+    }
+}
+
+
+
+@mixin backgroundAndForeground($container, $opacity) {
+  $colours:
+    "Orange" $orange-1,
+    "Gold" $gold,
+    "Silver" $silver,
+    "Cyan" $cyan,
+    "Navy" $navy,
+    "Black" $black,
+    "Charcoal" $charcoal,
+    "Slate" $slate,
+    "White" $white,
+    "Teal" $teal,
+    "Plum" $plum,
+    "Aubergine" $aubergine,
+    "Frost" $frost,
+    "Lavender" $lavender,
+    "Lilac" $lilac,
+    "Fig" $fig,
+    "Sky-Blue" $sky-blue,
+    "Terracotta" $terracotta,
+    "Pumpkin" $pumpkin,
+    "Ocean" $ocean,
+    "Fog" $fog,
+    "Olive" $olive,
+    "Highland-Green" $highland-green,
+    "Sage" $sage,
+    "Koala-Grey" $koala-grey
+  ;
+
+  @each $color in $colours {
+    $key: nth($color, 1);
+    $value: nth($color, 2);
+
+    &.foreground-#{$key} {
+      .#{$container} {
+        color:$value;
+      }
+    }
+    &.background-#{$key} {
+      background:rgba($value, $opacity);
+    }
+  }
+}
+
+
+
+@mixin textWithPalette() {
+  $colours:
+    "Orange" $orange-1,
+    "Gold" $gold,
+    "Silver" $silver,
+    "Cyan" $cyan,
+    "Navy" $navy,
+    "Black" $black,
+    "Charcoal" $charcoal,
+    "Slate" $slate,
+    "White" $white,
+    "Teal" $teal,
+    "Plum" $plum,
+    "Aubergine" $aubergine,
+    "Frost" $frost,
+    "Lavender" $lavender,
+    "Lilac" $lilac,
+    "Fig" $fig,
+    "Sky-Blue" $sky-blue,
+    "Terracotta" $terracotta,
+    "Pumpkin" $pumpkin,
+    "Ocean" $ocean,
+    "Fog" $fog,
+    "Olive" $olive,
+    "Highland-Green" $highland-green,
+    "Sage" $sage,
+    "Koala-Grey" $koala-grey
+  ;
+
+  @each $color in $colours {
+    $key: nth($color, 1);
+    $value: nth($color, 2);
+
+    &.#{$key} {
+      color:$value;
+      &:before {
+        color:$value;
+      }
+    }
+  }
+}
+
+
+
+@mixin ButtonWithPalette() {
+  $colours:
+    "Orange" $orange-1,
+    "Gold" $gold,
+    "Silver" $silver,
+    "Cyan" $cyan,
+    "Navy" $navy,
+    "Black" $black,
+    "Charcoal" $charcoal,
+    "Slate" $slate,
+    "White" $white,
+    "Teal" $teal,
+    "Plum" $plum,
+    "Aubergine" $aubergine,
+    "Frost" $frost,
+    "Lavender" $lavender,
+    "Lilac" $lilac,
+    "Fig" $fig,
+    "Sky-Blue" $sky-blue,
+    "Terracotta" $terracotta,
+    "Pumpkin" $pumpkin,
+    "Ocean" $ocean,
+    "Fog" $fog,
+    "Olive" $olive,
+    "Highland-Green" $highland-green,
+    "Sage" $sage,
+    "Koala-Grey" $koala-grey
+  ;
+
+  @each $color in $colours {
+    $key: nth($color, 1);
+    $value: nth($color, 2);
+
+    &.#{$key} {
+      background-color: $value;
+    }
+  }
+}
+
+
+
+@function tint($color, $percent){
+  @return mix(white, $color, $percent);
+}
+
+// Add percentage of black to a color
+@function shade($color, $percent){
+  @return mix(black, $color, $percent);
+}
+
+@mixin summary-colors ($productColorsMap) {
+    @each $colorName, $colorValue in $productColorsMap {
+        &.#{$colorName} {
+            background-color: $colorValue;
+        }
+    }
+}
+@mixin summary-colors-with-border ($productColorsMap) {
+    @each $colorName, $colorValue in $productColorsMap {
+        &.#{$colorName} {
+            background-color: $colorValue;
+        }
+        &.#{$colorName} + .module-panel {
+            border: 1px solid $colorValue;
+            box-shadow: none;
+        }
+    }
+}
+
+@mixin price-breakdown-summary-colors ($productColorsMap) {
+    @each $colorName, $colorValue in $productColorsMap {
+        &.#{$colorName} {
+            border-color: $colorValue;
+
+            .top-block {
+                background-color: $colorValue;
+            }
+        }
+    }
+}
+
+@mixin product-boxes-colors ($productColorsMap) {
+    @each $colorName, $colorValue in $productColorsMap {
+        &.#{$colorName} {
+            .travel-product-heading {
+                color: $white;
+
+                .travel-product-title {
+                    background-color: $colorValue;
+                }
+
+                .travel-product-details-cta {
+                    background-color: lighten($colorValue, 8%);
+                    border-top: 1px solid lighten($colorValue, 8%);
+                    border-bottom: 1px solid lighten($colorValue, 8%);
+                    transition: background-color 0.25s linear;
+
+                    @media (min-width: $screen-md-min) {
+                        &:hover {
+                            transition: background-color 0.25s linear;
+                            border-top: 1px solid $white;
+                            background-color: $colorValue;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

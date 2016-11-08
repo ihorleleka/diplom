@@ -1,0 +1,227 @@
+
+.icon-new {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'Bupa-fonticon-extended' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-mail_solid:before {
+  @extend .icon-new;
+  content: "\e159";
+}
+.icon-mail_outline:before {
+  @extend .icon-new;
+  content: "\e0e1";
+}
+.icon-share:before {
+  @extend .icon-new;
+  content: "\e80d";
+}
+.icon-twitter:before {
+  @extend .icon-new;
+  content: "\f099";
+}
+.icon-facebook:before {
+  @extend .icon-new;
+  content: "\f09a";
+}
+.icon-chain_link:before {
+  @extend .icon-new;
+  content: "\f0c1";
+}
+.icon-google-plus:before {
+  @extend .icon-new;
+  content: "\f0d5";
+}
+.icon-linkedin:before {
+  @extend .icon-new;
+  content: "\f0e1";
+}
+.icon-youtube:before {
+  @extend .icon-new;
+  content: "\f167";
+}
+.icon-instagram:before {
+  @extend .icon-new;
+  content: "\f16d";
+}
+.icon-skype:before {
+  @extend .icon-new;
+  content: "\f17e";
+}
+.icon-vimeo-square:before {
+  @extend .icon-new;
+  content: "\f194";
+}
+.icon-google:before {
+  @extend .icon-new;
+  content: "\f1a0";
+}
+.icon-paypal:before {
+  @extend .icon-new;
+  content: "\f1ed";
+}
+.icon-google-wallet:before {
+  @extend .icon-new;
+  content: "\f1ee";
+}
+.icon-cc-visa:before {
+  @extend .icon-new;
+  content: "\f1f0";
+}
+.icon-cc-mastercard:before {
+  @extend .icon-new;
+  content: "\f1f1";
+}
+.icon-cc-discover:before {
+  @extend .icon-new;
+  content: "\f1f2";
+}
+.icon-cc-amex:before {
+  @extend .icon-new;
+  content: "\f1f3";
+}
+.icon-cc-paypal:before {
+  @extend .icon-new;
+  content: "\f1f4";
+}
+.icon-cc-stripe:before {
+  @extend .icon-new;
+  content: "\f1f5";
+}
+
+
+.icon-emergency-treatment-bcs:before {
+    @extend .icon-new;
+    content: "\e912";
+}
+.icon-evacuation-bcs:before {
+    @extend .icon-new;
+    content: "\e913";
+}
+.icon-transplant-bcs:before {
+    @extend .icon-new;
+    content: "\e914";
+}
+.icon-credit-card:before {
+    @extend .icon-new;
+    content: "\e915";
+}
+.icon-credit-card-solid:before {
+    @extend .icon-new;
+    content: "\e916";
+}
+.icon-calendar-selected:before {
+    @extend .icon-new;
+    content: "\e904";
+}
+.icon-calendar:before {
+    @extend .icon-new;
+    content: "\e908";
+}
+.icon-clock:before {
+    @extend .icon-new;
+    content: "\e900";
+}
+.icon-handshake:before {
+    @extend .icon-new;
+    content: "\e903";
+}
+.icon-speech-1:before {
+    @extend .icon-new;
+    content: "\e905";
+}
+.icon-speech-2:before {
+    @extend .icon-new;
+    content: "\e906";
+}
+.icon-number-one:before {
+    @extend .icon-new;
+    content: "\e907";
+}
+.icon-number-three:before {
+    @extend .icon-new;
+    content: "\e910";
+}
+.icon-number-two:before {
+    @extend .icon-new;
+    content: "\e911";
+}
+.icon-info-solid:before {
+    @extend .icon-new;
+    content: "\e909";
+}
+.icon-pencil-line:before {
+    @extend .icon-new;
+    content: "\e90a";
+}
+.icon-pencil-solid:before {
+    @extend .icon-new;
+    content: "\e90b";
+}
+.icon-plus-line:before {
+    @extend .icon-new;
+    content: "\e90c";
+}
+.icon-plus-solid:before {
+    @extend .icon-new;
+    content: "\e90d";
+}
+.icon-whats-this-solid:before {
+    @extend .icon-new;
+    content: "\e90e";
+}
+.icon-whats-this:before {
+    @extend .icon-new;
+    content: "\e90f";
+}
+.icon-addition:before {
+    @extend .icon-new;
+    content: "\e901";
+}
+.icon-email:before {
+    @extend .icon-new;
+    content: "\e902";
+}
+
+
+
+
+
+.icon-calendar:before {
+    font-size: 2.6rem;
+}
+.icon-speech-2:before {
+    font-size: 2.6rem;
+    vertical-align: middle;
+}
+.icon-number-one:before {
+    top: -7px;
+    position: relative;
+    font-size: 2rem;
+}
+.icon-number-three:before {
+    top: -7px;
+    position: relative;
+    font-size: 2rem;
+    left:2px;
+}
+.icon-number-two:before {
+    top: -7px;
+    position: relative;
+    font-size: 2rem;
+}
+.icon-email:before {
+    font-size: 3.6rem;
+    top: 5px;
+    position: relative;
+}

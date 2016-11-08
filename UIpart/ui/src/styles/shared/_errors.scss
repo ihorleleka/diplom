@@ -1,0 +1,13 @@
+.error-generic {
+  display: none;
+  color: #d81e05;
+}
+
+.form-element-js,
+.datepicker-element {
+  &.has-error {
+    input, select {
+      border: 1px solid #d81e05;
+    }
+  }
+}

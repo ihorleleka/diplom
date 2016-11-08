@@ -1,0 +1,106 @@
+.header {
+  ul.secondary {
+
+    li {
+      border-left: 1px solid rgba(242,242,242,0.15);
+    }
+
+    .language-menu {
+      position:relative;
+      ul {
+        display: none;
+        position: absolute;
+        left: 16px;
+        background: $white;
+        z-index:500;
+        // box-shadow: 0 1px 2px #666;
+        border-left:1px solid #ccc;
+        border-bottom:1px solid #ccc;
+        border-right:1px solid #ccc;
+      }
+
+      li {
+        width:100%;
+        float:left;
+        border:none;
+
+        a {
+          width:100%;
+          float:left;
+          display: block;
+          min-width:100px;
+          color:$brand-secondary;
+          text-align:left;
+          padding: 12px 10px;
+          line-height: 14px;
+          overflow: hidden;
+
+          .language-flag {
+            width:12%;
+            max-width:20px;
+            margin-right:5%;
+            float:left;
+          }
+          span {
+            width:83%;
+            float:left;
+          }
+
+
+          &:hover, {
+            background: #006aaf;
+            color:$white;
+          }
+
+          &.active {
+            background: $brand-secondary;
+            color:$white;
+          }
+        }
+      }
+
+       @at-root #{$rtl-class}#{&} {
+        .icon:nth-child(2) {
+          float:left;
+          margin-top:7px;
+        }
+      }
+    }
+  }
+}
+
+
+
+
+.pushy  {
+  .language-menu {
+    ul a {
+      padding-left:40px;
+      &.active {
+        background: $brand-secondary;
+        color:$white;
+        // .language-flag {
+        //   border: 1px solid $white;
+        // }
+      }
+    }
+  }
+  .language-menu li {
+
+    img {
+      width:30px;
+      margin-right: 5px;
+    }
+  }
+  ul li a .icon {
+    @media (max-width: $screen-sm-max)  {
+      &.icon-arrow-down {
+        float: right;
+        margin: 13px 0;
+        font-size: 4rem;
+        margin-right: -15px;
+      }
+    }
+  }
+
+}

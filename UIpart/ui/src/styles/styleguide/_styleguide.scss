@@ -1,0 +1,476 @@
+@import "product-colors";
+
+// scss-lint:disable SelectorFormat NameFormat ColorVariable
+
+
+//**************** Mixins ****************
+$browser-context: 16; // Default
+@function em($pixels, $context: $browser-context) {
+  @return #{$pixels/$context}em;
+}
+
+
+$slow : 400ms;
+$fast : 200ms;
+
+
+%page_title {
+  @include font(3.2, 3.2, 300);
+  @media (min-width: $screen-sm-min) {
+    @include font(5, 5, 300);
+  }
+}
+
+%page_sub_title {
+  @include font(1.6, 1.6, 300);
+  @media (min-width: $screen-sm-min) {
+    @include font(1.6, 1.6, 300);
+  }
+}
+
+%article_heading {
+  color: $brand-secondary;
+  // font-size: 500;
+  font-size: 2.8rem;
+  margin-top: 10px;
+}
+
+.article_heading {
+  @extend %article_heading;
+}
+
+
+
+//**************** Headings ****************
+
+%h1 {
+  @include font(5, 5.6, 400);
+  margin-bottom: 20px;
+}
+
+%h2 {
+  @include font(3.6, 4.2, 300);
+  margin-bottom: 15px;
+}
+
+%h3 {
+  @include font(2.8, 3.6, 400);
+  margin-bottom: 10px;
+}
+
+%h4 {
+  @include font(2.4, 2.8, 400);
+  margin-bottom: 10px;
+}
+
+%h5 {
+  @include font(2, 2.8, 400);
+  margin-bottom: 10px;
+}
+
+%h6 {
+  @include font(1.8, 2.4, 400);
+  margin-bottom: 10px;
+}
+
+
+h1 {
+  @extend %h1;
+}
+
+h2 {
+  @extend %h2;
+}
+
+h3 {
+  @extend %h3;
+}
+
+h4 {
+  @extend %h4;
+}
+
+h5 {
+  @extend %h5;
+}
+
+h6 {
+  @extend %h6;
+}
+
+// Fancy heading
+
+%fancy_heading {
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+  line-height: 0;
+  padding: 0;
+  text-transform: uppercase;
+  @extend %h6;
+  
+  span {
+    background-color: $brand-secondary;
+    padding: 0 15px;
+  }
+}
+
+.fancy_heading {
+  @extend %fancy_heading;
+}
+
+%defaultTypography {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: $brand-secondary;
+  }
+
+  p {
+    font-weight: 100;
+  }
+
+  ul,
+  ol {
+    margin: 0 0 20px 10px;
+    padding: 0 0 0 10px;
+
+    li {
+      color: #3f3f3f;
+      font-size: 1.4rem;
+      font-weight: 100;
+      line-height: 2.3rem;
+      list-style: inherit;
+      margin-bottom: 10px;
+    }
+  }
+}
+
+//**************** paragraphs ****************
+%font_large {
+  font-size: 1.8rem;
+}
+
+%font_medium {
+  font-size: 1.6rem;
+}
+
+%font_standard {
+  font-size: 1.4rem;
+}
+
+%font_small {
+  font-size: 1.2rem;
+}
+
+%p_large {
+  @extend %font_large;
+  line-height: 2.4rem;
+}
+
+.p_large {
+  @extend %p_large;
+}
+
+%p_small {
+  @extend %font_small;
+  line-height: 1.5rem;
+}
+
+.p_small {
+  @extend %p_small;
+}
+
+p {
+  @extend %font_standard;
+
+  b,
+  strong {
+    font-weight: 400;
+  }
+}
+
+
+//**************** buttons ****************
+%button {
+  //@include button($brand-cta-blue, $white, 2px 15px, inline-block,2px 5px);
+  border: 0;
+  display: inline-block;
+  font-size: 1.8rem;
+  font-weight: 400;
+  line-height: 46px;
+  min-height: 46px;
+
+  .icon,
+  [class*=" icon-"],
+  [class^=icon-] {
+    font-size: 1.7rem;
+    line-height: 46px;
+  }
+}
+
+button,
+input[type="submit"],
+a.cta {
+  @extend %button;
+}
+
+%icon_left {
+  .icon {
+    margin-right: 2px;
+  }
+}
+
+.icon-left {
+  @extend %icon_left;
+}
+
+%icon_right {
+  .icon {
+    margin-left: 2px;
+  }
+}
+
+.icon-right {
+  @extend %icon_right;
+}
+
+
+//**************** links ****************
+a {
+  color: $brand-primary;
+  font-weight: 500;
+}
+
+.withIcon {
+  .icon {
+    color: $brand-primary;
+    cursor: pointer;
+    font-size: .7em;
+    margin-left: 2px;
+
+    &:hover {
+      color: $brand-secondary;
+    }
+  }
+}
+
+
+
+//**************** inputs ****************
+%input {
+  border: 1px solid #b2b2b2;
+  border-radius: 0;
+  color: $brand-secondary;
+  font-size: 1.6rem;
+  font-weight: 400;
+  padding: 12px 20px;
+  transition: all $slow;
+
+  &::-webkit-input-placeholder {color: #b2b2b2;}
+  &::-moz-placeholder {color: #b2b2b2;}
+  &:-ms-input-placeholder{color: #b2b2b2;}
+  &:-moz-placeholder {color: #b2b2b2;}
+
+  &:focus {
+    border: 1px solid $brand-primary;
+    outline: none;
+
+  }
+}
+
+form input,
+form select,
+.quote-input-container input,
+.quote-input-container select {
+  @extend %input;
+}
+
+select::-ms-expand {
+  display: none;
+}
+
+
+.quote-container {
+  input[type=password],
+  input[type=text],
+  input[type=search],
+  input[type=tel] {
+    background: $white;
+    border: 1px solid $border-primary;
+    border-top: 1px solid #666;
+    padding: 10px 15px;
+    transition: all $slow;
+
+
+    &:focus {
+      border: 1px solid $brand-primary;
+      outline: none;
+    }
+  }
+
+  select {
+    border-top: 1px solid #666;
+    padding: 8px 15px 9px 15px !important;
+  }
+}
+
+
+
+
+//**************** colours ****************
+.color-test {
+  float: left;
+  height: 40px;
+  margin: 5px;
+  width: 40px;
+}
+
+.brand-primary {
+  background: $brand-primary;
+}
+
+.brand-secondary {
+  background: $brand-secondary;
+}
+
+.brand-orange {
+  background: $brand-orange;
+}
+
+.brand-red {
+  background: $brand-red;
+}
+
+.brand-select {
+  background: $brand-select;
+}
+
+.brand-premier {
+  background: $brand-premier;
+}
+
+.brand-elite {
+  background: $brand-elite;
+}
+
+
+// Sections spacing
+section {
+  display: inline-block;
+  width: 100%;
+}
+
+.container .two-colums {
+  ul,
+  ol {
+    li {
+      font-size: 1.4rem;
+      font-weight: 400;
+      list-style-type: disc;
+      margin-bottom: 5px;
+      text-align: left;
+    }
+  }
+}
+
+.mod-rt-table-1 {
+  table {
+    td {
+      padding: 8px;
+    }
+  }
+
+  thead {
+    background-color: $brand-primary;
+    color: $white;
+
+    th {
+      padding: 8px;
+    }
+  }
+}
+
+.two-column-table{
+  width: 100%;
+  border: 0;
+  th, td {
+    @extend %font_large;
+    vertical-align: top;
+  }
+
+  th {
+    padding: 0 20px 10px 0;
+    font-weight: 100;
+    text-align: left;
+  }
+
+  td {
+    font-weight: 400;
+    padding: 0 0 10px 0;
+  }
+
+  tr:last-child {
+    th, td {
+      padding-bottom: 25px;
+    }
+  }
+
+  @media (max-width:780px){
+
+    th, td {
+      display: block;
+      width: 100% !important;
+    }
+
+    th {
+      padding: 0;
+    }
+
+    td {
+      text-align:  left !important;
+      padding: 0 0 20px 0;
+    }
+
+    tr:last-child{
+      th {
+        padding-bottom: 0 !important;
+      }
+    }
+  }
+}
+
+.one-row-total {
+  tr, tr:last-child {
+    th, td {
+      padding-top: 15px;
+      @extend %h2;
+      color: $brand-secondary !important;
+    }
+    @media (max-width:780px){
+
+      th {
+        margin-bottom: 0;
+        padding-bottom: 10px !important;
+      }
+      td {
+        padding-top: 0;
+        margin-bottom: 0;
+      }
+
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+//
