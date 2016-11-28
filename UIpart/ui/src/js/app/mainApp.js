@@ -19,6 +19,8 @@ class MainApp {
       if ($('.footer').length) {
         footerFunction.init();
       }
+
+      console.log('ama rdy!!');
     });
   }
 }
