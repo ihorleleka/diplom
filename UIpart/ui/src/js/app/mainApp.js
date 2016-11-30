@@ -7,7 +7,7 @@ var footerFunction = require('./shared/footer.js');
 
 class MainApp {
   static run (mode) {
-    $(document).ready(function () {
+    $(function () {
       if ($('.mobile-navigation').length) {
         sideNavigation.init();
       }

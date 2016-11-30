@@ -8,13 +8,17 @@
     .primary-footer {
         padding:50px 10%;
         background:$brand-primary;
-        display: inline-block;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         width: 100%;
 
         .footer-list{
 
-            width: 20%;
+            margin: 0 5%;
             float: left;
+            display: flex;
+            align-self: flex-start;
 
             @media (max-width: $screen-md-max) {
                 margin: 2% 0;
@@ -53,6 +57,7 @@
                         }
 
                          &.empty-link {
+
                             &:hover {
                                 text-decoration: none;
                                 cursor: default;

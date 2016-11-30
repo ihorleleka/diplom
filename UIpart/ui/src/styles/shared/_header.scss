@@ -446,11 +446,12 @@
 			}
 
 			.third-level {
+				font-weight: bold !important;
 
-			  &:hover {
-				cursor: default;
-				text-decoration: none;
-			  }
+				&:hover {
+					cursor: default;
+					text-decoration: none;
+				}
 			}
 			.sub-navigation-inner {
 				max-width: 960px;
