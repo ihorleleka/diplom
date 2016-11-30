@@ -34,11 +34,11 @@ var singlePageNavigation = (function () {
     },
 
     showSpecificPage: function (page) {
-      singlePageNavigation.pages.hide();
+      singlePageNavigation.pages.fadeOut(1);
       if (page.length > 0) {
-        page.show();
+        page.fadeIn('slow');
       } else {
-        singlePageNavigation.errorPage.show();
+        singlePageNavigation.errorPage.fadeIn('slow');
       }
     }
   };
