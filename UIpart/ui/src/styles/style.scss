@@ -1,7 +1,6 @@
 
 // Frameworks
 @import "framework/_bootstrap";
-@import "framework/_bootstrap-datepicker";
 
 // Mixins & Functions
 @import "mixins/_mixins";
@@ -12,28 +11,15 @@
 
 // Shared
 @import "shared/_reset";
-@import "shared/_typography";
-@import "shared/_buttons";
-@import "shared/_fancybox";
-@import "shared/bxslider";
 @import "shared/_header";
-@import "shared/_language_menu";
 @import "shared/_footer";
 @import "shared/_pushy";
-@import "shared/_tabbed-pager";
 @import "shared/_sticky-nav";
-@import "shared/_tooltips";
-@import "shared/_bootstrap-fixes";
-@import "shared/_forms";
 @import "shared/_bottom-sticky-bar";
-@import "shared/_options-pdp";
-@import "shared/_fallback-language.scss";
+@import "shared/_pages";
 
 // Styleguide
 @import "styleguide/_styleguide";
-
-@import "shared/language-fixes";
-@import "shared/errors";
 
 .tooltip-pdp-wrapper {
     display: inline-block;

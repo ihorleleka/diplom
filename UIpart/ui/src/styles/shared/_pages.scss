@@ -1,0 +1,14 @@
+.pages {
+    .page {
+        text-align: center;
+
+        p {
+            text-align: left;
+        }
+        &.errorPage {
+            p {
+                text-align: center;
+            }
+        }
+    }
+}
