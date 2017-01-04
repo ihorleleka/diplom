@@ -1,13 +1,9 @@
 
-import LanguageService from 'app/shared/LanguageService';
 
 class AjaxUrlTransform {
-  static constitute () { return [
-      LanguageService
-    ]; }
+  static constitute () { }
 
-  constructor (languageService) {
-    this.languageService = languageService;
+  constructor () {
   }
 
   transformUrl (url, settings = {}) {
