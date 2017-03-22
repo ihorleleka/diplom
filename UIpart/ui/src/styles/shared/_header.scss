@@ -11,6 +11,15 @@
 	@include fontSmooth();
 	@include prefixed(transition, transform .6s ease);
 
+	.utility-navigation {
+		text-align: center;
+
+		p {
+			color: black;
+			margin: 5px 0px;
+		}
+	}
+
 	&.offpage{
 		@include prefixed(transform, translateY(-130px));
 	}
@@ -429,7 +438,6 @@
 
 
 		}
-
 
 		.sub-navigation {
 			display: none;
