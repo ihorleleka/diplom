@@ -12,7 +12,10 @@ var navigationContent = (function () {
 
     init: function () {
       return navigationContent.initHeaderNavigation()
-        .then(navigationContent.initHeaderTopMenu);
+        .then(navigationContent.initHeaderTopMenu)
+        .then(function () {
+          navigationContent.createRelatedPages(navigationContent.data);
+        });
     },
 
     initHeaderNavigation: function () {
@@ -20,10 +23,7 @@ var navigationContent = (function () {
       .then(function (data) {
         navigationContent.data = JSON.parse(data);
       })
-      .then(navigationContent.createNavigation)
-      .then(function () {
-        navigationContent.createRelatedPages(navigationContent.data);
-      });
+      .then(navigationContent.createNavigation);
     },
 
     initHeaderTopMenu: function () {
@@ -54,7 +54,8 @@ var navigationContent = (function () {
     categoryWithChildren: function (category) {
       return `
             <li>
-            <a href="${category.page_id}" class="js-has-sub-navigation has-sub-navigation" target="">
+            <a href="${category.page_id}" class="js-has-sub-navigation
+            has-sub-navigation" target="">
             ${category.name}
             <span class="sub-level-arrow"></span>
             </a>
@@ -109,8 +110,9 @@ var navigationContent = (function () {
         if (item.page_id.length > 0) {
           navigationContent.$pages.append(`<div class="page" id="${item.page_id}"
             name="${item.page_id}"></div>`);
-          navigationContent.createRelatedPages(item.children);
         }
+
+        navigationContent.createRelatedPages(item.children);
       });
     }
   };
