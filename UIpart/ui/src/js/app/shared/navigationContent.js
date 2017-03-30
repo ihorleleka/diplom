@@ -8,6 +8,7 @@ var navigationContent = (function () {
     data: null,
     $mainNavigation: $('.main-navigation'),
     $primaryLinks: $('.main-navigation .primary'),
+    $pages: $('.pages'),
 
     init: function () {
       return navigationContent.initHeaderNavigation()
@@ -19,7 +20,10 @@ var navigationContent = (function () {
       .then(function (data) {
         navigationContent.data = JSON.parse(data);
       })
-      .then(navigationContent.createNavigation);
+      .then(navigationContent.createNavigation)
+      .then(function () {
+        navigationContent.createRelatedPages(navigationContent.data);
+      });
     },
 
     initHeaderTopMenu: function () {
@@ -41,7 +45,7 @@ var navigationContent = (function () {
     categoryWithoutChildren: function (category) {
       return `
             <li>
-            <a href="${category.id}" class="" target="">
+            <a href="${category.page_id}" class="" dest="${category.page_id}" target="">
             ${category.name}
             </a>
             </li>`;
@@ -50,7 +54,7 @@ var navigationContent = (function () {
     categoryWithChildren: function (category) {
       return `
             <li>
-            <a href="${category.id}" class="js-has-sub-navigation has-sub-navigation" target="">
+            <a href="${category.page_id}" class="js-has-sub-navigation has-sub-navigation" target="">
             ${category.name}
             <span class="sub-level-arrow"></span>
             </a>
@@ -88,12 +92,26 @@ var navigationContent = (function () {
       subCategories.forEach(function (subCategory) {
         result += `
            <li>
-            <a href="" target="" dest="${subCategory.id}">${subCategory.name}</a>
+            <a href="" target="" dest="${subCategory.page_id}">${subCategory.name}</a>
           </li>
           `;
       });
 
       return result;
+    },
+
+    createRelatedPages: function (data) {
+      if (data == null) {
+        return;
+      }
+
+      data.forEach(function (item) {
+        if (item.page_id.length > 0) {
+          navigationContent.$pages.append(`<div class="page" id="${item.page_id}"
+            name="${item.page_id}"></div>`);
+          navigationContent.createRelatedPages(item.children);
+        }
+      });
     }
   };
   return {
