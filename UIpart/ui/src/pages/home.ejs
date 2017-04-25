@@ -1,0 +1,19 @@
+<% include ../layouts/top %>
+  <body>
+    <main class="main">
+      <% include ../partials/header %>
+      <div class="content">
+        <div class="pages">
+          <div class="container">            
+            <% include ../partials/content-for-main-page %>
+            <% include ../partials/errorPage %>
+            <% include ../partials/login %>
+            <% include ../partials/regPage %>
+            <% include ../partials/feedbackPage %>
+          </div>          
+        </div>
+      </div>
+      <% include ../partials/footer %>
+    </main>
+  <% include ../partials/mobile-nav %>
+<% include ../layouts/bottom %>

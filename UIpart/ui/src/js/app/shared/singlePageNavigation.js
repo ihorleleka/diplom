@@ -7,20 +7,13 @@ var singlePageNavigation = (function () {
     pagesContainer: $('.pages'),
     pages: $('.pages .page'),
     errorPage: $('.pages .errorPage'),
+    loginPage: $('.pages .loginPage'),
+    regPage: $('.pages .regPage'),
 
     init: function () {
-      singlePageNavigation.showMainPage(true);
-      singlePageNavigation.bindEvents();
-    },
-
-    showMainPage: function (show) {
-      singlePageNavigation.pages.hide();
       let mainPage = singlePageNavigation.pagesContainer.find('[name="main-page"]');
-      if (show) {
-        mainPage.show();
-      } else {
-        mainPage.hide();
-      }
+      singlePageNavigation.showSpecificPage(mainPage);
+      singlePageNavigation.bindEvents();
     },
 
     bindEvents: function () {
@@ -31,13 +24,31 @@ var singlePageNavigation = (function () {
         let pageToRedirect = singlePageNavigation.pagesContainer.find(findExpression);
         singlePageNavigation.showSpecificPage(pageToRedirect);
       });
+
+      $('body').on('click', '.mobile-navigation a[dest]', function (e) {
+        e.preventDefault();
+        let nameOfPageToRedirect = $(this).attr('dest');
+        let findExpression = '[name="' + nameOfPageToRedirect + '"]';
+        let pageToRedirect = singlePageNavigation.pagesContainer.find(findExpression);
+        singlePageNavigation.showSpecificPage(pageToRedirect);
+        $('.sb-close').click();
+      });
+
+      singlePageNavigation.loginPage.find('.reg').click(function (event) {
+        singlePageNavigation.showSpecificPage(singlePageNavigation.regPage);
+      });
     },
 
     showSpecificPage: function (page) {
+      singlePageNavigation.pagesContainer = $('.pages');
+      singlePageNavigation.pages = $('.pages .page');
       singlePageNavigation.pages.fadeOut(1);
       if (page.length > 0) {
+        singlePageNavigation.pages.addClass('hidden');
+        page.removeClass('hidden');
         page.fadeIn('slow');
       } else {
+        singlePageNavigation.errorPage.removeClass('hidden');
         singlePageNavigation.errorPage.fadeIn('slow');
       }
     }
