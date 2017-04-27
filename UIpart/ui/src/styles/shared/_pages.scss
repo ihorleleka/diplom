@@ -1,25 +1,9 @@
 .pages {
     margin: 60px 0px;
 
-    input {
-        border-radius: 0;
-        padding: 15px;
-        cursor: pointer;
-        margin-bottom: 10px;
-        font-size: 16px;
-        width: 100%;
-        font-weight: 500;
-        height: 41px;
-        color: #00335B;
-        background: #fff;
-        border: 1px solid #b2b2b2;
-        border-top: 1px solid #666;
-        padding: 10px 15px;
-        -webkit-transition: all .4s;
-        transition: all .4s;
-        box-shadow: 0 10px 70px -10px #666;
+    .error {
+        border: 1px solid red !important;
     }
-
     .panel-background {
         background: #fff;
         background: rgba(255,255,255,.8);
@@ -28,7 +12,6 @@
         border-radius: 5px;
         padding: 20px 30px 15px;
     }
-
     .page {
         text-align: center;
         box-shadow: 0 10px 70px -10px #666;
@@ -38,6 +21,57 @@
             text-align: left;
             margin: 0 10%;
         }
+        input {
+            border-radius: 0;
+            padding: 15px;
+            cursor: pointer;
+            margin-bottom: 10px;
+            font-size: 16px;
+            width: 100%;
+            font-weight: 500;
+            height: 41px;
+            color: #00335B;
+            background: #fff;
+            border: 1px solid #b2b2b2;
+            border-top: 1px solid #666;
+            padding: 10px 15px;
+            -webkit-transition: all .4s;
+            transition: all .4s;
+            box-shadow: 0 10px 70px -10px #666;
+        }
+        button {
+            display: block;
+            align-self: center;
+            width: 80%;
+            margin: 6px 0px;
+
+            &.login {
+                background-color: #5fb053;
+            }
+            &.send {
+                background-color: #DE5408;
+            }
+            &.reg {
+                background-color: #0079c8;
+            }
+
+            @media (min-width: $screen-md-min) {
+                width: 20%;
+            }
+        }
+        label {
+            text-align: left;
+            display: block;
+            font-size: 18px;
+        }
+        textarea {
+            width: 100%;
+        }
+        .buttons-block {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
         &.errorPage {
             margin-bottom: 30px;
 
@@ -46,83 +80,17 @@
             }
         }
         &.loginPage {
-            button {
-                display: block;
+            a {
                 align-self: center;
+                color: inherit;
                 width: 80%;
-                margin: 6px 0px;
 
-                &.login {
-                    background-color: #5fb053;
+                button {
+                    width: 100%;
                 }
-
-                &.reg {
-                    background-color: #0079c8;
-                }
-
                 @media (min-width: $screen-md-min) {
                     width: 20%;
                 }
-            }
-
-            .buttons-block {
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-            }
-        }
-        &.regPage {
-            label {
-                text-align: left;
-                display: block;
-                font-size: 18px;
-            }
-            button {
-                display: block;
-                align-self: center;
-                width: 80%;
-                margin: 6px 0px;
-
-                &.reg {
-                    background-color: #0079c8;
-                }
-
-                @media (min-width: $screen-md-min) {
-                    width: 20%;
-                }
-            }
-
-            .buttons-block {
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-            }
-        }
-        &.feedbackPage {
-            label {
-                text-align: left;
-                display: block;
-                font-size: 18px;
-            }
-            button {
-                display: block;
-                align-self: center;
-                width: 80%;
-                margin: 6px 0px;
-
-                &.send {
-                    background-color: #0079c8;
-                }
-
-                @media (min-width: $screen-md-min) {
-                    width: 20%;
-                }
-            }
-
-            .buttons-block {
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
             }
         }
     }

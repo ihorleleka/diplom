@@ -33,10 +33,6 @@ var singlePageNavigation = (function () {
         singlePageNavigation.showSpecificPage(pageToRedirect);
         $('.sb-close').click();
       });
-
-      singlePageNavigation.loginPage.find('.reg').click(function (event) {
-        singlePageNavigation.showSpecificPage(singlePageNavigation.regPage);
-      });
     },
 
     showSpecificPage: function (page) {

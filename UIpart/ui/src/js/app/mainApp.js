@@ -6,6 +6,7 @@ var headerFunction = require('./shared/header.js');
 var footerFunction = require('./shared/footer.js');
 var navigationContent = require('./shared/navigationContent.js');
 var singlePageNavigation = require('./shared/singlePageNavigation.js');
+var validation = require('./shared/validation.js');
 
 class MainApp {
   static run (mode) {
@@ -26,6 +27,7 @@ class MainApp {
 
           if ($('.pages').length) {
             singlePageNavigation.init();
+            validation.init();
           }
         });
       }
