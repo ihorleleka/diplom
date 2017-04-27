@@ -19,8 +19,13 @@ var registration = (function () {
     },
 
     collectData: function (page) {
-      var inputs = page.find('input');
-      console.log(inputs);
+      var collectedData = {};
+      collectedData.email = page.find('.email').val();
+      collectedData.password = page.find('.password').val();
+      collectedData.name = page.find('.name').val();
+      collectedData.surname = page.find('.surname').val();
+      collectedData.father_name = page.find('.father_name').val();
+      console.log(collectedData);
     }
   };
 
