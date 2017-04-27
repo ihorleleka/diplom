@@ -66,87 +66,6 @@
 		}
 	}
 
-	.icon-bupa-logo {
-	  &.Orange           {color: $orange-1;
-		&:hover:before {color: darken($orange-1, 10%);}
-	  }
-	  &.Gold             {color: $gold;
-		&:hover:before {color: darken($gold, 10%);}
-	  }
-	  &.Silver           {color: $silver;
-		&:hover:before {color: darken($silver, 10%);}
-	  }
-	  &.Cyan             {color: $cyan;
-		&:hover:before {color: $navy;}
-	  }
-	  &.Navy             {color: $navy;
-		&:hover:before {color: darken($navy, 10%);}
-	  }
-	  &.Black            {color: $black;
-		&:hover:before {color: $charcoal;}
-	  }
-	  &.Charcoal         {color: $charcoal;
-		&:hover:before {color: darken($charcoal, 10%);}
-	  }
-	  &.Slate            {color: $slate;
-		&:hover:before {color: darken($slate, 10%);}
-	  }
-	  &.White            {color: $white;
-		&:hover:before {color: darken($white, 10%);}
-	  }
-	  &.Teal             {color: $teal;
-		&:hover:before {color: darken($teal, 10%);}
-	  }
-	  &.Plum             {color: $plum;
-		&:hover:before {color: darken($plum, 10%);}
-	  }
-	  &.Aubergine        {color: $aubergine;
-		&:hover:before {color: darken($aubergine, 10%);}
-	  }
-	  &.Frost            {color: $frost;
-		&:hover:before {color: darken($frost, 10%);}
-	  }
-	  &.Lavender         {color: $lavender;
-		&:hover:before {color: darken($lavender, 10%);}
-	  }
-	  &.Lilac            {color: $lilac;
-		&:hover:before {color: darken($lilac, 10%);}
-	  }
-	  &.Fig              {color: $fig;
-		&:hover:before {color: darken($fig, 10%);}
-	  }
-	  &.Sky-Blue         {color: $sky-blue;
-		&:hover:before {color: darken($sky-blue, 10%);}
-	  }
-	  &.Terracotta       {color: $terracotta;
-		&:hover:before {color: darken($terracotta, 10%);}
-	  }
-	  &.Pumpkin          {color: $pumpkin;
-		&:hover:before {color: darken($pumpkin, 10%);}
-	  }
-	  &.Ocean            {color: $ocean;
-		&:hover:before {color: darken($ocean, 10%);}
-	  }
-	  &.Fog              {color: $fog;
-		&:hover:before {color: darken($fog, 10%);}
-	  }
-	  &.Olive            {color: $olive;
-		&:hover:before {color: darken($olive, 10%);}
-	  }
-	  &.Highland-Green   {color: $highland-green;
-		&:hover:before {color: darken($highland-green, 10%);}
-	  }
-	  &.Sage             {color: $sage;
-		&:hover:before {color: darken($sage, 10%);}
-	  }
-	  &.Koala-Grey       {color: $koala-grey;
-		&:hover:before {color: darken($koala-grey, 10%);}
-	  }
-	  &.Travel-Gold      {color: $travel-gold;
-		&:hover:before {color: darken($travel-gold, 10%);}
-	  }
-	}
-
 	ul.secondary{
 
 		background:$brand-primary;
@@ -915,10 +834,7 @@
 	  top:0;
 	}
   }
-
-  .icon-bupa-logo {
-	color:$brand-primary;
-  }
+  
   .in-page-dual-branding-image {
 	float:right;
 	max-height:70px;
