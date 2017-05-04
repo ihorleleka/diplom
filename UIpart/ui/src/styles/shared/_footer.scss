@@ -21,17 +21,17 @@
             align-self: flex-start;
 
             @media (max-width: $screen-md-max) {
-                margin: 2% 0;
+                margin: 2% 3px;
                 width: 33%;
             }
 
             @media (max-width: $screen-sm-min) {
-                margin: 2% 0;
+                margin: 2% 3px;
                 width: 50%;
             }
 
             @media (max-width: $screen-xs) {
-                margin: 2% 0;
+                margin: 2% 3px;
                 width: 100%;
             }
 
