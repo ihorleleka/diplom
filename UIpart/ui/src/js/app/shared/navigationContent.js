@@ -107,7 +107,7 @@ var navigationContent = (function () {
       }
 
       data.forEach(function (item) {
-        if (item.page_id.length > 0) {
+        if (item.page_id != null && item.page_id.length > 0) {
           navigationContent.$pages.append(`<div class="page" id="${item.page_id}"
             name="${item.page_id}"></div>`);
         }
