@@ -17,24 +17,29 @@ var validation = (function () {
       });
     },
 
+    validateField: function ($field) {
+      var regexAttr = $field.attr('regex');
+      if (regexAttr != undefined) {
+        var regExp = new RegExp(regexAttr);
+        var value = $field.val();
+        if (!regExp.test(value)) {
+          $field.parent().addClass('error');
+        } else {
+          $field.parent().removeClass('error');
+        }
+      }
+    },
+
     validatePage: function (page) {
       var inputs = page.find('input, textarea');
       inputs.removeClass('error');
 
       inputs.each(function (index) {
         var $input = $(this);
-        var regexAttr = $input.attr('regex');
-        if (regexAttr != undefined) {
-          var regExp = new RegExp(regexAttr);
-          var value = $input.val();
-          if (!regExp.test(value)) {
-            $input.addClass('error');
-          }
-
-          $input.change(function () {
-            $(this).removeClass('error');
-          });
-        }
+        validation.validateField($input);
+        $input.change(function () {
+          validation.validateField($(this));
+        });
       });
 
       return !page.find('.error').length > 0;

@@ -1,8 +1,20 @@
 .pages {
     margin: 60px 0px;
 
-    .error {
-        border: 1px solid red !important;
+    .input-group {
+        p {
+            display: none;
+            color: red;
+        }
+        &.error {
+            input, textarea {
+                border: 1px solid red !important;
+                margin: 0;
+            }
+            p {
+                display: block;
+            }
+        }
     }
     .panel-background {
         background: #fff;

@@ -3,13 +3,22 @@
     <div class="col-xs-12">
       <div class="quote-panel-background">
         <h2 class="step-title">З допомогою форми зворотнього зв'язку Ви можете зв'язатися з адміністрацією сайту.</h2>   
-          <div class="col-md-4 col-md-offset-4 col-xs-12">          
-            <label>Ім'я</label>
-            <input type="text" class="name" placeholder="Прізвище та ім'я" regex="^[\bc *a *t *s\bа-яА-ЯіЇєІЇЄ]{1,}$">
-            <label>Емейл</label>
-            <input type="email" class="email" placeholder="Ваш email" regex="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
-            <label>Комментар</label>
-            <textarea class="comment" cols="32" rows="5" placeholder="Будь ласка залиште свій коментар" regex="^[[\bc *a *t *s\ba-zA-Zа-яА-ЯіЇєІЇЄ0-9,\.]{1,}$"></textarea>
+          <div class="col-md-4 col-md-offset-4 col-xs-12">
+            <div class="input-group">
+              <label>Ім'я</label>
+              <input type="text" class="name" placeholder="Прізвище та ім'я" regex="^[\bc *a *t *s\bа-яА-ЯіЇєІЇЄ]{1,}$">
+              <p>Текст помилки</p>
+            </div>       
+            <div class="input-group">
+              <label>Емейл</label>
+              <input type="email" class="email" placeholder="Ваш email" regex="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+              <p>Текст помилки</p>
+            </div>            
+            <div class="input-group">
+              <label>Комментар</label>
+              <textarea class="comment" cols="32" rows="5" placeholder="Будь ласка залиште свій коментар" regex="^[[\bc *a *t *s\ba-zA-Zа-яА-ЯіЇєІЇЄ0-9,\.]{1,}$"></textarea>
+              <p>Текст помилки</p>
+            </div>
           </div>
       </div>
     </div>
