@@ -51,7 +51,8 @@ var singlePageNavigation = (function () {
   };
 
   return {
-    init: singlePageNavigation.init
+    init: singlePageNavigation.init,
+    showSpecificPage: singlePageNavigation.showSpecificPage
   };
 }());
 

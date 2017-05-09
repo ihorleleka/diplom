@@ -11,9 +11,9 @@ class AjaxService {
  static post (url, dataType = null, settings = {}) {
     let postOptions = Object.assign({
         url: url,
-        data: JSON.stringify(dataType),
+        data: dataType,
         type: 'POST',
-        contentType: 'application/json'
+        datatype: 'html'
       }, settings);
 
     return $.ajax(postOptions);

@@ -12,7 +12,6 @@ var navigationContent = (function () {
 
     init: function () {
       return navigationContent.initHeaderNavigation()
-        .then(navigationContent.initHeaderTopMenu)
         .then(function () {
           navigationContent.createRelatedPages(navigationContent.data);
         });
@@ -24,10 +23,6 @@ var navigationContent = (function () {
         navigationContent.data = JSON.parse(data);
       })
       .then(navigationContent.createNavigation);
-    },
-
-    initHeaderTopMenu: function () {
-
     },
 
     createNavigation: function () {

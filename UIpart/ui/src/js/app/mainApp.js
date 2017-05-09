@@ -10,6 +10,7 @@ var validation = require('./shared/validation.js');
 var registration = require('./shared/registration.js');
 var login = require('./shared/login.js');
 var feedBack = require('./shared/feedBack.js');
+var requestSender = require('./shared/requestSender.js');
 
 class MainApp {
   static run (mode) {
@@ -34,6 +35,7 @@ class MainApp {
             registration.init();
             login.init();
             feedBack.init();
+            requestSender.init();
           }
         });
       }
