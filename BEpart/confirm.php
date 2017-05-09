@@ -54,6 +54,6 @@ if($action['result'] != 'error'){
         $action['text'] = 'The key and email is not in our database.';
      
     }
- 
+ echo($action['text']);
 }
 ?>

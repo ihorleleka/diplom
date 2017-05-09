@@ -11,11 +11,21 @@ mysql_select_db($dbname) or die("I couldn't find the database table make sure it
 //get variables
 $password = mysql_real_escape_string($_POST['password']);
 $email = mysql_real_escape_string($_POST['email']);
-$firstName = mysql_real_escape_string($_POST['firstName']);
-$lastName = mysql_real_escape_string($_POST['lastName']);
-$fatherName = mysql_real_escape_string($_POST['fatherName']);
+$firstName = $_POST['firstName'];
+$lastName = $_POST['lastName'];
+$fatherName = $_POST['fatherName'];
 
 $password = md5($password);
+
+mysql_query('SET NAMES UTF8');
+
+$test = mysql_query("SELECT * FROM `users` WHERE email = $email");
+
+if(!$test) {
+    header('HTTP/1.1 500');
+    header('Content-Type: text; charset=UTF-8');
+    die('Користувач з таким email вже існує!');
+}
 
 $add = mysql_query("INSERT INTO `users` VALUES(NULL,'$email','$password','$firstName','$lastName','$fatherName',0)");
 
@@ -35,46 +45,42 @@ if ($add) {//the user was added to the database
                 
     if ($confirm) {                    
         $info = array(
-        'username' => $firstName + $lastName,
+        'username' => $firstName . ' ' . $lastName,
         'email' => $email,
         'key' => $key
         );
         if (send_email($info)) {      
-            //email sent
             $action['result'] = 'success';
-            array_push($text,'Thanks for signing up. Please check your email for confirmation!');                        
+            array_push($action,'Thanks for signing up. Please check your email for confirmation!');                        
         } else {                            
             $action['result'] = 'error';
-            array_push($text,'Could not send confirm email');                        
+            array_push($action,'Could not send confirm email');   
+            header('HTTP/1.1 500');
+            header('Content-Type: text; charset=UTF-8');
+            die('Could not send confirm email');                     
         }      
     } else {
         $action['result'] = 'error';
-        array_push($text,'Confirm row was not added to the database. Reason: ' . mysql_error());                        
+        array_push($action,'Confirm row was not added to the database. Reason: ' . mysql_error());                        
     }             
 } else {         
     $action['result'] = 'error';
-    array_push($text,'User could not be added to the database. Reason: ' . mysql_error());
+    array_push($action,'User could not be added to the database. Reason: ' . mysql_error());
 }
 
-function send_email ($info) {         
-    //format each email
-    $body =  "";
-    $body_plain_txt = "";
- 
-    //setup the mailer
-    $transport = Swift_MailTransport::newInstance();
-    $mailer = Swift_Mailer::newInstance($transport);
-    $message = Swift_Message::newInstance();
-    $message ->setSubject('Welcome to Site Name');
-    $message ->setFrom(array('noreply@sitename.com' => 'Site Name'));
-    $message ->setTo(array($info['email'] => $info['username']));
-     
-    $message ->setBody($body_plain_txt);
-    $message ->addPart($body, 'text/html');
-             
-    $result = $mailer->send($message);
-     
-    return $result;     
+function send_email ($info) {
+    $server_name = $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'];
+    $link = 'http://'.$server_name.'/confirm.php?email='.$info['email'].'&key='.$info['key'];
+    $to = $info['email'];
+    $subject = 'Registration Confirmation';
+    $message = $info['username'] . ', Вам необхідно підтвердити реєстрацію. <br>';
+    $message .= 'Для підтвердження реєстрації перейдіть за цим посиланням: <br>';
+    $message .= '<br>';
+    $message .= '<a href="'.$link.'">Підтвердити реєстрацію</a>';
+    $headers = "Content-type: text/html; charset=utf-8 \r\n";
+    $headers .= "From: olymp.dp.ua@gmail.com\r\n";
+
+    return mail($to, $subject, $message, $headers);
 }
 
 ?>
