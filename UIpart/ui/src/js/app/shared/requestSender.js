@@ -13,6 +13,7 @@ var requestSender = (function () {
     bindEvents: function () {
       PubSub.subscribe('RegistrationAttempt', requestSender.registrationHandler);
       PubSub.subscribe('SendFeedback', requestSender.sendFeedback);
+      PubSub.subscribe('loginAttempt', requestSender.login);
     },
 
     registrationHandler: function (msg, data) {
@@ -32,6 +33,16 @@ var requestSender = (function () {
       })
       .fail(function (xhr, status, error) {
         PubSub.publishSync('feedbackSendFail', { xhr: xhr, status: status, error: error });
+      });
+    },
+
+    login: function (msg, data) {
+      AjaxService.post('login.php', data)
+      .done(function (msg) {
+        PubSub.publishSync('loginSuccess', msg);
+      })
+      .fail(function (xhr, status, error) {
+        PubSub.publishSync('loginFail', { xhr: xhr, status: status, error: error });
       });
     }
   };

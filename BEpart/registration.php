@@ -19,9 +19,10 @@ $password = md5($password);
 
 mysql_query('SET NAMES UTF8');
 
-$test = mysql_query("SELECT * FROM `users` WHERE email = $email");
 
-if(!$test) {
+$num_rows = mysql_num_rows(mysql_query("SELECT * FROM users WHERE email = '$email'"));
+
+if($num_rows > 0) {
     header('HTTP/1.1 500');
     header('Content-Type: text; charset=UTF-8');
     die('Користувач з таким email вже існує!');

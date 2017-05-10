@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import validation from './validation.js';
+import PubSub from 'pubsub-js';
 
 var login = (function () {
   'use strict';
@@ -12,8 +13,10 @@ var login = (function () {
     bindEvents: function () {
       $('.loginPage button.login').click(function (event) {
         var pageForLogin = $(this).parents('.page');
-        if (validation.validatePage(pageForLogin)) {
-          login.collectData(pageForLogin);
+        if (validation.validatePage(pageForLogin) && !$(this).hasClass('clicked')) {
+          $(this).addClass('clicked');
+          var data = login.collectData(pageForLogin);
+          PubSub.publishSync('loginAttempt', data);
         }
       });
     },
@@ -22,7 +25,7 @@ var login = (function () {
       var collectedData = {};
       collectedData.email = page.find('.email').val();
       collectedData.password = page.find('.password').val();
-      console.log(collectedData);
+      return collectedData;
     }
   };
 
