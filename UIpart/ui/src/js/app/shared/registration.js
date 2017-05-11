@@ -37,6 +37,7 @@ var registration = (function () {
       var $loginPageRegButton = $('.loginPage a[dest="regPage"]');
       $loginPageRegButton.remove();
       var $regPageBottom = $('.regPage .row .col-xs-12 .buttons-block');
+      $regPageBottom.find('p').remove();
       $regPageBottom.append('<p>На указану Вами поштову адресу було відправлено '
         + 'email повідомлення для підтвердження реєстрації</p>');
     },

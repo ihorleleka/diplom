@@ -66,6 +66,9 @@
             &.reg {
                 background-color: #0079c8;
             }
+            &.clicked {
+                background-color: grey !important;
+            }
 
             @media (min-width: $screen-md-min) {
                 width: 20%;
