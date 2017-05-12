@@ -36,7 +36,7 @@ var navigationContent = (function () {
         navigationContent.$pages.append(`<div class="page" id="profile" name="profile">
           <h2>Особистий кабінет</h2>
           <p>Користувач:</p>
-          <p>${info.lastName} ${info.firstName} ${info.fatherName}</p>
+          <p>${info.id}</p>
           </div>`
         );
       }

@@ -32,7 +32,7 @@ var login = (function () {
 
     loginSuccess: function (msg, data) {
       login.createCookie(data, 14);
-      location.reload();
+      window.location.href = window.location.href;
     },
 
     loginFail: function (msg, data) {
