@@ -28,11 +28,17 @@ var navigationContent = (function () {
     },
 
     initHeaderTop: function () {
-      if (login.readCookie() != null) {
+      var info = login.readCookie();
+      if (info != null) {
         var $loginLink = $('.utility-navigation .secondary a[dest="login"]');
         $loginLink.attr('dest', 'profile');
         $loginLink.html('<i class="icon icon icon-login"></i>Особистий кабінет');
-        console.log(login.readCookie());
+        navigationContent.$pages.append(`<div class="page" id="profile" name="profile">
+          <h2>Особистий кабінет</h2>
+          <p>Користувач:</p>
+          <p>${info.lastName} ${info.firstName} ${info.fatherName}</p>
+          </div>`
+        );
       }
     },
 
