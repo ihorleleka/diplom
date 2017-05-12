@@ -36,7 +36,7 @@ if ($info['active'] == 1)
      array_push($action,'Thanks for signing up.');
      header('HTTP/1.1 200');
      header('Content-Type: application/json; charset=UTF-8');
-     echo json_encode(array('firstName' => $info['firstName'], 'lastName' => $info['lastName'], 'fatherName'=> $info['fatherName']));
+     echo json_encode(array('id' => $info['id']));
 } else {
     header('HTTP/1.1 500');
     header('Content-Type: text; charset=UTF-8');
