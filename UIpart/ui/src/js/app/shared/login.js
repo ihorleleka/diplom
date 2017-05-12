@@ -32,7 +32,6 @@ var login = (function () {
 
     loginSuccess: function (msg, data) {
       login.createCookie('customValue', 14);
-      console.log(login.decrypt(login.readCookie()));
       location.reload();
     },
 
@@ -57,7 +56,7 @@ var login = (function () {
       for (var i = 0; i < ca.length; i++) {
         var c = ca[i];
         while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+        if (c.indexOf(nameEQ) == 0) return login.decrypt(c.substring(nameEQ.length, c.length));
       }
 
       return null;
@@ -100,7 +99,8 @@ var login = (function () {
   };
 
   return {
-    init: login.init
+    init: login.init,
+    readCookie: login.readCookie
   };
 }());
 

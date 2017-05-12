@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import AjaxService from 'app/mvc/services/AjaxService';
+import login from './login.js';
 
 var navigationContent = (function () {
   'use strict';
@@ -14,7 +15,8 @@ var navigationContent = (function () {
       return navigationContent.initHeaderNavigation()
         .then(function () {
           navigationContent.createRelatedPages(navigationContent.data);
-        });
+        })
+        .then(navigationContent.initHeaderTop);
     },
 
     initHeaderNavigation: function () {
@@ -23,6 +25,14 @@ var navigationContent = (function () {
         navigationContent.data = JSON.parse(data);
       })
       .then(navigationContent.createNavigation);
+    },
+
+    initHeaderTop: function () {
+      if (login.readCookie() != null) {
+        var $loginLink = $('.utility-navigation .secondary a[dest="login"]');
+        $loginLink.attr('dest', 'profile');
+        $loginLink.html('<i class="icon icon icon-login"></i>Особистий кабінет');
+      }
     },
 
     createNavigation: function () {
