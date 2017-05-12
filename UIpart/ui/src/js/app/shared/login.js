@@ -31,7 +31,7 @@ var login = (function () {
     },
 
     loginSuccess: function (msg, data) {
-      login.createCookie('customValue', 14);
+      login.createCookie(data, 14);
       location.reload();
     },
 
@@ -47,7 +47,8 @@ var login = (function () {
       var date = new Date();
       date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
       expires = '; expires=' + date.toUTCString();
-      document.cookie = 'olymp_dp_cookie' + '=' + login.encrypt(value) + expires + '; path=/';
+      document.cookie = 'olymp_dp_cookie' + '=' + login.encrypt(login.objToString(value))
+      + expires + '; path=/';
     },
 
     readCookie: function () {
@@ -60,6 +61,17 @@ var login = (function () {
       }
 
       return null;
+    },
+
+    objToString: function (obj) {
+      var str = '';
+      for (var p in obj) {
+        if (obj.hasOwnProperty(p)) {
+          str += p + '=' + obj[p] + ';';
+        }
+      }
+
+      return str;
     },
 
     encrypt: function (text) {
