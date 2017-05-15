@@ -14,6 +14,7 @@ var requestSender = (function () {
       PubSub.subscribe('RegistrationAttempt', requestSender.registrationHandler);
       PubSub.subscribe('SendFeedback', requestSender.sendFeedback);
       PubSub.subscribe('loginAttempt', requestSender.login);
+      PubSub.subscribe('getUserInfo', requestSender.getUserInfo);
     },
 
     registrationHandler: function (msg, data) {
@@ -43,6 +44,13 @@ var requestSender = (function () {
       })
       .fail(function (xhr, status, error) {
         PubSub.publishSync('loginFail', { xhr: xhr, status: status, error: error });
+      });
+    },
+
+    getUserInfo: function (msg, data) {
+      AjaxService.post('getUserInfo.php', data)
+      .done(function (msg) {
+        PubSub.publishSync('userInfoReceived', msg);
       });
     }
   };

@@ -11,6 +11,7 @@ var registration = require('./shared/registration.js');
 var login = require('./shared/login.js');
 var feedBack = require('./shared/feedBack.js');
 var requestSender = require('./shared/requestSender.js');
+var accountService = require('./shared/accountService.js');
 
 class MainApp {
   static run (mode) {
@@ -36,6 +37,7 @@ class MainApp {
             login.init();
             feedBack.init();
             requestSender.init();
+            accountService.init();
           }
         });
       }

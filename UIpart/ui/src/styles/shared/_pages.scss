@@ -56,6 +56,7 @@
             align-self: center;
             width: 80%;
             margin: 6px 0px;
+            background-color: #5fb053;
 
             &.login {
                 background-color: #5fb053;
@@ -96,6 +97,40 @@
 
             p {
                 text-align: center;
+            }
+        }
+        &.profile {
+            .user-info-block {
+                text-align: left;
+
+                p {
+                    display: inline-block;
+                    margin: 0 10px;
+                }
+                .edit-button {
+                    display: inline-block;
+                    margin: 0 10px;
+                }
+            }
+            .buttons-block {
+                display: block;
+                margin-top: 20px;
+
+                a {
+                    display: inline-block;
+                    margin: 0px 20px;
+                }
+                button {
+                    width: 100%;
+                    &.logout {
+                        background-color: #DE5408;
+                        width: auto;
+                        float: right;
+                    }
+                    i {
+                        font-size: 0.75em;
+                    }
+                }
             }
         }
         &.loginPage {

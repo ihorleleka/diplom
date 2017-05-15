@@ -33,12 +33,6 @@ var navigationContent = (function () {
         var $loginLink = $('.utility-navigation .secondary a[dest="login"]');
         $loginLink.attr('dest', 'profile');
         $loginLink.html('<i class="icon icon icon-login"></i>Особистий кабінет');
-        navigationContent.$pages.append(`<div class="page" id="profile" name="profile">
-          <h2>Особистий кабінет</h2>
-          <p>Користувач:</p>
-          <p>${info.id}</p>
-          </div>`
-        );
       }
     },
 

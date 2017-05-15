@@ -17,6 +17,7 @@ var registration = (function () {
         var pageForRegistration = $(this).parents('.page');
         if (validation.validatePage(pageForRegistration) && !$(this).hasClass('clicked')) {
           $(this).addClass('clicked');
+          $('body').addClass('blured');
           var data = registration.collectData(pageForRegistration);
           PubSub.publishSync('RegistrationAttempt', data);
         }
@@ -36,6 +37,7 @@ var registration = (function () {
     registrationComplete: function (msg, data) {
       var $loginPageRegButton = $('.loginPage a[dest="regPage"]');
       $loginPageRegButton.remove();
+      $('body').removeClass('blured');
       var $regPageBottom = $('.regPage .row .col-xs-12 .buttons-block');
       $regPageBottom.find('p').remove();
       $regPageBottom.append('<p>На указану Вами поштову адресу було відправлено '
@@ -47,6 +49,7 @@ var registration = (function () {
       $regPageBottom.find('p').remove();
       $regPageBottom.append(`<p>${data.xhr.responseText}</p>`);
       $('.regPage button.reg').removeClass('clicked');
+      $('body').removeClass('blured');
     }
   };
 
