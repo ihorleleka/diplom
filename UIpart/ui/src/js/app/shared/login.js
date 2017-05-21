@@ -32,7 +32,6 @@ var login = (function () {
 
     loginSuccess: function (msg, data) {
       login.createCookie(data, 14);
-      window.location.href = window.location.href;
     },
 
     loginFail: function (msg, data) {
@@ -46,75 +45,54 @@ var login = (function () {
       var expires = '';
       var date = new Date();
       date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-      expires = '; expires=' + date.toUTCString();
-      document.cookie = 'olymp_dp_cookie' + '=' + login.encrypt(JSON.stringify(value))
-      + expires + '; path=/';
+      expires = '; expires=' + date.toGMTString();
+      document.cookie = 'olymp_dp_cookie=' + login.encode(value.id, '123') + expires + ';path=/';
+      location.reload();
     },
 
     readCookie: function () {
-      var nameEQ = 'olymp_dp_cookie' + '=';
+      var nameEQ = 'olymp_dp_cookie=';
       var ca = document.cookie.split(';');
       for (var i = 0; i < ca.length; i++) {
         var c = ca[i];
         while (c.charAt(0) == ' ') c = c.substring(1, c.length);
         if (c.indexOf(nameEQ) == 0) {
-          return JSON.parse(login.decrypt(c.substring(nameEQ.length, c.length)));
+          return login.decode(c.substring(nameEQ.length, c.length), '123');
         }
       }
 
       return null;
     },
 
-    objToString: function (obj) {
+    encode: function (s, k) {
+      var enc = '';
       var str = '';
-      for (var p in obj) {
-        if (obj.hasOwnProperty(p)) {
-          str += p + '=' + obj[p] + ';';
-        }
+      str = s.toString() + '5274';
+      for (var i = 0; i < str.length; i++) {
+        var a = str.charCodeAt(i);
+        var b = a ^ k;
+        enc = enc + String.fromCharCode(b);
       }
 
-      return str;
+      return enc;
     },
 
-    encrypt: function (text) {
-      var output = new String;
-      var Temp = new Array();
-      var Temp2 = new Array();
-      var TextSize = text.length;
-      for (var i = 0; i < TextSize; i++) {
-        var rnd = Math.round(Math.random() * 122) + 68;
-        Temp[i] = text.charCodeAt(i) + rnd;
-        Temp2[i] = rnd;
+    decode: function (s, k) {
+      var enc = '';
+      for (var i = 0; i < s.length; i++) {
+        var a = s.charCodeAt(i);
+        var b = a ^ k;
+        enc = enc + String.fromCharCode(b);
       }
 
-      for (var i = 0; i < TextSize; i++) {
-        output += String.fromCharCode(Temp[i], Temp2[i]);
-      }
-
-      return output;
-    },
-
-    decrypt: function (text) {
-      var output = new String;
-      var Temp = new Array();
-      var Temp2 = new Array();
-      var TextSize = text.length;
-      for (var i = 0; i < TextSize; i++) {
-        Temp[i] = text.charCodeAt(i);
-        Temp2[i] = text.charCodeAt(i + 1);
-      }
-
-      for (var i = 0; i < TextSize; i = i + 2) {
-        output += String.fromCharCode(Temp[i] - Temp2[i]);
-      }
-
-      return output;
+      return (parseInt(enc) - 5274) / 10000;
     }
   };
 
   return {
     init: login.init,
-    readCookie: login.readCookie
+    readCookie: login.readCookie,
+    createCookie: login.createCookie
   };
 }());
 

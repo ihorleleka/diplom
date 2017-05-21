@@ -11,7 +11,7 @@ var accountService = (function () {
       accountService.bindEvents();
       var info = login.readCookie();
       if (info != null) {
-        accountService.userInfo.id = info.id;
+        accountService.userInfo.id = info;
         PubSub.publishSync('getUserInfo', accountService.userInfo);
       }
     },
@@ -20,8 +20,8 @@ var accountService = (function () {
       PubSub.subscribe('userInfoReceived', accountService.userInfoReceived);
       var $logout = $('.pages .profile button.logout');
       $logout.click(function () {
-        document.cookie = 'olymp_dp_cookie' + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-        window.location.href = window.location.href;
+        document.cookie = 'olymp_dp_cookie=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+        location.reload();
       });
     },
 
