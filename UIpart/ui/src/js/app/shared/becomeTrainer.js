@@ -7,13 +7,20 @@ var becomeTrainer = (function () {
   'use strict';
 
   var becomeTrainer = {
+    data: null,
+    userInfo: null,
+    deletePage: true,
     init: function () {
       becomeTrainer.bindEvents();
       PubSub.subscribe('becomeTrainerSuccess', becomeTrainer.becomeTrainerSuccess);
       PubSub.subscribe('becomeTrainerFail', becomeTrainer.becomeTrainerFail);
       PubSub.subscribe('getDivisionsSuccess', becomeTrainer.getDivisionsSuccess);
-      PubSub.subscribe('getDivisionsFail', becomeTrainer.getDivisionsFail);
       PubSub.publishSync('getDivisions');
+      PubSub.subscribe('userInfoReceived', becomeTrainer.userInfoReceived);
+    },
+
+    userInfoReceived: function (msg, data) {
+      becomeTrainer.userInfo = data;
     },
 
     bindEvents: function () {
@@ -25,6 +32,11 @@ var becomeTrainer = (function () {
           data.userId = accountService.userInfo.id;
           PubSub.publishSync('becomeTrainer', data);
         }
+      });
+
+      $('a[dest="profile"]').click(function (event) {
+        becomeTrainer.initList();
+        $(this).off(event);
       });
     },
 
@@ -47,17 +59,41 @@ var becomeTrainer = (function () {
     },
 
     getDivisionsSuccess: function (msg, data) {
-      data.forEach(function (division) {
-        becomeTrainer.divisionSelectAddOption(division.name, division.id);
-      });
+      becomeTrainer.data = data;
     },
 
-    getDivisionsFail: function (msg, data) {
+    initList: function () {
+      becomeTrainer.data.forEach(function (division) {
+        becomeTrainer.divisionSelectAddOption(division.name, division.id);
+      });
+
+      becomeTrainer.deleteEverything(becomeTrainer.deletePage);
     },
 
     divisionSelectAddOption: function (optionText, optionId) {
-      var $choseDivisionSelect = $('.becomeTrainer .chose-division');
-      $choseDivisionSelect.append(`<option value="${optionId}">${optionText}</option>`);
+      if (becomeTrainer.checkOption(optionId)) {
+        var $choseDivisionSelect = $('.becomeTrainer .chose-division');
+        $choseDivisionSelect.append(`<option value="${optionId}">${optionText}</option>`);
+        becomeTrainer.deletePage = false;
+      }
+    },
+
+    checkOption: function (optionId) {
+      var result = true;
+      becomeTrainer.userInfo.roles.forEach(function (obj) {
+        if (obj.division_id == optionId) {
+          result = false;
+        }
+      });
+
+      return result;
+    },
+
+    deleteEverything: function (toDel) {
+      if (toDel) {
+        $('a[dest="becomeTrainer"]').remove();
+        $('.page.becomeTrainer').remove();
+      }
     }
   };
 

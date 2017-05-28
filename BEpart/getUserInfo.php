@@ -20,7 +20,11 @@ $action = array();
 $action['result'] = null;
 
 $info = mysql_fetch_assoc($result);
-$rolesInfo = mysql_fetch_assoc($rolesResult);
+$rolesInfo = array();
+while($roleInfo = mysql_fetch_assoc($rolesResult)) 
+{
+    $rolesInfo[] = $roleInfo;
+}
 $info['roles'] = $rolesInfo;
 $action['result'] = 'success';
 array_push($action,'Thanks for signing up.');
