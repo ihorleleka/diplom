@@ -49,7 +49,8 @@ var accountService = (function () {
     }
   };
   return {
-    init: accountService.init
+    init: accountService.init,
+    userInfo: accountService.userInfo
   };
 }());
 

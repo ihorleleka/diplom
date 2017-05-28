@@ -12,19 +12,20 @@ $action = array();
 $action['result'] = null;
  
 //quick/simple validation
-if(empty($_GET['email']) || empty($_GET['key'])){
+if(empty($_GET['id']) || empty($_GET['key']) || empty($_GET['division'])){
     $action['result'] = 'error';
-    $action['text'] = 'We are missing variables. Please double check your email.';          
+    $action['text'] = 'We are missing variables. Please double check your email.'; 
 }
          
 if($action['result'] != 'error'){
- 
+
     //cleanup the variables
-    $email = mysql_real_escape_string($_GET['email']);
+    $userId = mysql_real_escape_string($_GET['id']);
     $key = mysql_real_escape_string($_GET['key']);
+    $division = mysql_real_escape_string($_GET['division']);
      
     //check if the key is in the database
-    $check_key = mysql_query("SELECT * FROM `confirm` WHERE `email` = '$email' AND `key` = '$key' LIMIT 1") or die(mysql_error());
+    $check_key = mysql_query("SELECT * FROM `trainer_confirm` WHERE `userId` = '$userId' AND `key` = '$key' LIMIT 1") or die(mysql_error());
      
     if(mysql_num_rows($check_key) != 0){
                  
@@ -32,26 +33,26 @@ if($action['result'] != 'error'){
         $confirm_info = mysql_fetch_assoc($check_key);
          
         //confirm the email and update the users database
-        $update_users = mysql_query("UPDATE `users` SET `active` = 1 WHERE `id` = '$confirm_info[userid]' LIMIT 1") or die(mysql_error());
+        $update_user_roles = mysql_query("INSERT INTO `user_roles` VALUES('3', '$userId', '$division')") or die(mysql_error());
         //delete the confirm row
-        $delete = mysql_query("DELETE FROM `confirm` WHERE `id` = '$confirm_info[id]' LIMIT 1") or die(mysql_error());
+        $delete = mysql_query("DELETE FROM `trainer_confirm` WHERE `id` = '$confirm_info[id]' LIMIT 1") or die(mysql_error());
          
-        if($update_users){
+        if($update_user_roles){
                          
             $action['result'] = 'success';
-            $action['text'] = 'Користувач підтверджений. Дякуємо!';
+            $action['text'] = 'Успіх.';
          
         }else{
  
             $action['result'] = 'error';
-            $action['text'] = 'Користувач не може бути активований. Reason: '.mysql_error();;
+            $action['text'] = 'Трапилась помилка: '.mysql_error();;
          
         }
      
     }else{
      
         $action['result'] = 'error';
-        $action['text'] = 'Даний ключ та емейл не було знайдено у нашій базі даних.';
+        $action['text'] = 'Таких даних немає у нашій базі.';
      
     }
  echo($action['text']);

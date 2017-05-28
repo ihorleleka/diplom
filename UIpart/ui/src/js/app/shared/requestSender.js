@@ -15,6 +15,8 @@ var requestSender = (function () {
       PubSub.subscribe('SendFeedback', requestSender.sendFeedback);
       PubSub.subscribe('loginAttempt', requestSender.login);
       PubSub.subscribe('getUserInfo', requestSender.getUserInfo);
+      PubSub.subscribe('getDivisions', requestSender.getDivisions);
+      PubSub.subscribe('becomeTrainer', requestSender.becomeTrainer);
     },
 
     registrationHandler: function (msg, data) {
@@ -51,6 +53,26 @@ var requestSender = (function () {
       AjaxService.post('getUserInfo.php', data)
       .done(function (msg) {
         PubSub.publishSync('userInfoReceived', msg);
+      });
+    },
+
+    getDivisions: function (msg, data) {
+      AjaxService.post('getDivisions.php', data)
+      .done(function (msg) {
+        PubSub.publishSync('getDivisionsSuccess', msg);
+      })
+      .fail(function (xhr, status, error) {
+        PubSub.publishSync('getDivisionsFail', { xhr: xhr, status: status, error: error });
+      });
+    },
+
+    becomeTrainer: function (msg, data) {
+      AjaxService.post('becomeTrainer.php', data)
+      .done(function (msg) {
+        PubSub.publishSync('becomeTrainerSuccess', msg);
+      })
+      .fail(function (xhr, status, error) {
+        PubSub.publishSync('becomeTrainerFail', { xhr: xhr, status: status, error: error });
       });
     }
   };

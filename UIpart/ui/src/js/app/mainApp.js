@@ -12,6 +12,7 @@ var login = require('./shared/login.js');
 var feedBack = require('./shared/feedBack.js');
 var requestSender = require('./shared/requestSender.js');
 var accountService = require('./shared/accountService.js');
+var becomeTrainer = require('./shared/becomeTrainer.js');
 
 class MainApp {
   static run (mode) {
@@ -38,6 +39,7 @@ class MainApp {
             feedBack.init();
             requestSender.init();
             accountService.init();
+            becomeTrainer.init();
           }
         });
       }

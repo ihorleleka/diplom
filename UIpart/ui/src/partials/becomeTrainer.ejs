@@ -3,8 +3,22 @@
     <div class="col-xs-12">
       <div class="quote-panel-background">
         <h2 class="step-title">Щоб стати тренером Вам необхідно створити запит до координатору відповідного розділу.</h2>
-          <div class="col-md-4 col-md-offset-4">
-           
+        <div class="col-md-3">
+          <label for="title">Розділ</label>
+          <div class="custom-select-wrapper input-group">
+            <i class="icon-chevron-down"></i>
+            <select selected="false" class="chose-division">
+              <option value="" disabled="" selected="">Виберіть розділ</option>
+            </select>
+            <p>Вам необхідно вказати розділ</p>
+          </div>
+        </div>
+        <div class="col-md-9">
+           <div class="input-group">
+            <label>Коментар</label>
+            <textarea class="comment" cols="32" rows="5" placeholder="Будь ласка залиште свій коментар" regex="^[[\bc *a *t *s\ba-zA-Zа-яА-ЯіЇєІЇЄ0-9:,\./]{1,}$"></textarea>
+            <p>Поле коментар не може бути порожнім і може містити лише: літери, цифри та символи / : , .</p>
+          </div>
         </div>
       </div>
     </div>

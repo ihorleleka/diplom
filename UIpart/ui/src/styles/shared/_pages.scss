@@ -7,7 +7,7 @@
             color: red;
         }
         &.error {
-            input, textarea {
+            input, textarea, select {
                 border: 1px solid red !important;
                 margin: 0;
             }
@@ -52,6 +52,7 @@
             box-shadow: 0 10px 70px -10px #666;
         }
         button {
+            color: white;
             display: block;
             align-self: center;
             width: 80%;
@@ -62,7 +63,7 @@
                 background-color: #5fb053;
             }
             &.send {
-                background-color: #DE5408;
+                background-color: #0079c8;
             }
             &.reg {
                 background-color: #0079c8;
