@@ -109,6 +109,9 @@ var accountService = (function () {
     updateUserDataSuccess: function (msg, data) {
       accountService.populateData();
       accountService.additionalInfoBlockHandle();
+      var $profilePage = $('.pages .profile');
+      $profilePage.find('.click-part').show();
+      $profilePage.find('.edit-part').hide();
       $('.page.userAddInfo button').removeClass('clicked');
       $('body').removeClass('blured');
     },
