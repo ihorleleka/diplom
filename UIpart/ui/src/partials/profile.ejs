@@ -5,10 +5,43 @@
       <div class="user-info-block">
         <p>Користувач:</p>
         <p class="user-info"></p>
+        <div class="edit-block">
+          <div class="click-part">
+              <a>
+                  <i class="icon icon-pencil-solid"></i>
+                  Редагувати
+              </a>
+          </div>
+          <div class="edit-part">
+            <div class="left">
+              <div class="input-group">
+                <input type="text" class="surname" placeholder="Прізвище" regex="^[а-яА-ЯіЇєІЇЄ']{1,}$">
+                <input type="text" class="name" placeholder="Ім'я" regex="^[а-яА-ЯіЇєІЇЄ']{1,}$">
+                <input type="text" class="father_name" placeholder="По батькові" regex="^[а-яА-ЯіЇєІЇЄ']{1,}$">              
+                <p>Поля не можуть бути порожніми та мають містити лише літери.</p>
+              </div>
+            </div>
+            <div class="right">
+              <a><i class="icon icon-pencil-solid"></i>Зберегти</a>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="user-info-block">
         <p>Email:</p>
         <p class="user-email"></p>
+        <div class="edit-block">
+          <div class="click-part">
+            <a><i class="icon icon-pencil-solid"></i>Редагувати</a>
+          </div>
+          <div class="edit-part input-group">
+            <div class="input-group">
+              <input type="email" class="email" placeholder="Введіть новий email" regex="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+              <a><i class="icon icon-pencil-solid"></i>Зберегти</a>
+              <p>Введено некорректну email адресу.</p>
+            </div>
+          </div>
+        </div>
       </div>      
     </div>
     <div class="col-xs-12">

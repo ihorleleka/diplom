@@ -16,6 +16,8 @@ $result = mysql_query("SELECT * FROM users WHERE id = '$id'");
 
 $rolesResult = mysql_query("SELECT * FROM user_roles WHERE user_id = '$id'");
 
+$additionalInfo = mysql_query("SELECT * FROM users_additional_info WHERE user_id = '$id'");
+
 $action = array();
 $action['result'] = null;
 
@@ -26,6 +28,7 @@ while($roleInfo = mysql_fetch_assoc($rolesResult))
     $rolesInfo[] = $roleInfo;
 }
 $info['roles'] = $rolesInfo;
+$info['additionalInfo'] = mysql_fetch_assoc($additionalInfo);
 $action['result'] = 'success';
 array_push($action,'Thanks for signing up.');
 header('HTTP/1.1 200');

@@ -23,9 +23,9 @@ var validation = (function () {
         var regExp = new RegExp(regexAttr);
         var value = $field.val();
         if (!regExp.test(value)) {
-          $field.parent().addClass('error');
+          $field.parents('.input-group').addClass('error');
         } else {
-          $field.parent().removeClass('error');
+          $field.parents('.input-group').removeClass('error');
         }
       }
     },
@@ -33,9 +33,9 @@ var validation = (function () {
     validateSelectField: function ($field) {
       var selectedIndex = $field[0].selectedIndex;
       if (selectedIndex == 0) {
-        $field.parent().addClass('error');
+        $field.parents('.input-group').addClass('error');
       } else {
-        $field.parent().removeClass('error');
+        $field.parents('.input-group').removeClass('error');
       }
     },
 
@@ -44,19 +44,23 @@ var validation = (function () {
       inputs.removeClass('error');
       inputs.each(function (index) {
         var $input = $(this);
-        validation.validateField($input);
-        $input.change(function () {
-          validation.validateField($(this));
-        });
+        if ($input.is(':visible')) {
+          validation.validateField($input);
+          $input.change(function () {
+            validation.validateField($(this));
+          });
+        }
       });
 
       var selects = page.find('select');
       selects.each(function (index) {
         var $select = $(this);
-        validation.validateSelectField($select);
-        $select.change(function () {
-          validation.validateSelectField($(this));
-        });
+        if ($select.is(':visible')) {
+          validation.validateSelectField($select);
+          $select.change(function () {
+            validation.validateSelectField($(this));
+          });
+        }
       });
 
       return !page.find('.error').length > 0;

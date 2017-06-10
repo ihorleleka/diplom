@@ -14,7 +14,7 @@ var navigationContent = (function () {
     init: function () {
       return navigationContent.initHeaderNavigation()
         .then(function () {
-          navigationContent.createRelatedPages(navigationContent.data);
+          navigationContent.createRelatedPages(navigationContent.data, 0);
         })
         .then(navigationContent.initHeaderTop);
     },
@@ -107,18 +107,18 @@ var navigationContent = (function () {
       return result;
     },
 
-    createRelatedPages: function (data) {
+    createRelatedPages: function (data, level) {
       if (data == null) {
         return;
       }
 
       data.forEach(function (item) {
         if (item.page_id != null && item.page_id.length > 0) {
-          navigationContent.$pages.append(`<div class="page" id="${item.page_id}"
-            name="${item.page_id}"></div>`);
+          navigationContent.$pages.append(`<div class="page" level="${level}"
+            item_id="${item.id}" name="${item.page_id}"></div>`);
         }
 
-        navigationContent.createRelatedPages(item.children);
+        navigationContent.createRelatedPages(item.children, level + 1);
       });
     }
   };

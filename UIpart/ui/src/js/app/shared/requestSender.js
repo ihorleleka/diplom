@@ -17,6 +17,8 @@ var requestSender = (function () {
       PubSub.subscribe('getUserInfo', requestSender.getUserInfo);
       PubSub.subscribe('getDivisions', requestSender.getDivisions);
       PubSub.subscribe('becomeTrainer', requestSender.becomeTrainer);
+      PubSub.subscribe('getTrainersList', requestSender.getTrainersList);
+      PubSub.subscribe('updateUserData', requestSender.updateUserData);
     },
 
     registrationHandler: function (msg, data) {
@@ -73,6 +75,23 @@ var requestSender = (function () {
       })
       .fail(function (xhr, status, error) {
         PubSub.publishSync('becomeTrainerFail', { xhr: xhr, status: status, error: error });
+      });
+    },
+
+    getTrainersList: function (msg, data) {
+      AjaxService.post('getTrainers.php', data)
+      .done(function (msg) {
+        PubSub.publishSync('trainersListReceived', msg);
+      });
+    },
+
+    updateUserData: function (msg, data) {
+      AjaxService.post('updateUserData.php', data)
+      .done(function (msg) {
+        PubSub.publishSync('updateUserDataSuccess', msg);
+      })
+      .fail(function (xhr, status, error) {
+        PubSub.publishSync('updateUserDataFail', { xhr: xhr, status: status, error: error });
       });
     }
   };
