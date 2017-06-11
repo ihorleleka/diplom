@@ -19,10 +19,16 @@ var requestSender = (function () {
       PubSub.subscribe('becomeTrainer', requestSender.becomeTrainer);
       PubSub.subscribe('getTrainersList', requestSender.getTrainersList);
       PubSub.subscribe('updateUserData', requestSender.updateUserData);
+      PubSub.subscribe('createNewCategory', requestSender.createCategory);
+      PubSub.subscribe('deleteCategory', requestSender.deleteCategory);
+      PubSub.subscribe('createNewTopic', requestSender.createTopic);
+      PubSub.subscribe('deleteTopic', requestSender.deleteTopic);
+      PubSub.subscribe('createNewSubCategory', requestSender.createSubCategory);
+      PubSub.subscribe('deleteSubCategory', requestSender.deleteSubCategory);
     },
 
     registrationHandler: function (msg, data) {
-      AjaxService.post('registration.php', data)
+      AjaxService.post('php/registration.php', data)
       .done(function (msg) {
         PubSub.publishSync('registrationComplete', msg);
       })
@@ -32,7 +38,7 @@ var requestSender = (function () {
     },
 
     sendFeedback: function (msg, data) {
-      AjaxService.post('feedback.php', data)
+      AjaxService.post('php/feedback.php', data)
       .done(function (msg) {
         PubSub.publishSync('feedbackSent', msg);
       })
@@ -42,7 +48,7 @@ var requestSender = (function () {
     },
 
     login: function (msg, data) {
-      AjaxService.post('login.php', data)
+      AjaxService.post('php/login.php', data)
       .done(function (msg) {
         PubSub.publishSync('loginSuccess', msg);
       })
@@ -52,14 +58,14 @@ var requestSender = (function () {
     },
 
     getUserInfo: function (msg, data) {
-      AjaxService.post('getUserInfo.php', data)
+      AjaxService.post('php/getUserInfo.php', data)
       .done(function (msg) {
         PubSub.publishSync('userInfoReceived', msg);
       });
     },
 
     getDivisions: function (msg, data) {
-      AjaxService.post('getDivisions.php', data)
+      AjaxService.post('php/getDivisions.php', data)
       .done(function (msg) {
         PubSub.publishSync('getDivisionsSuccess', msg);
       })
@@ -69,7 +75,7 @@ var requestSender = (function () {
     },
 
     becomeTrainer: function (msg, data) {
-      AjaxService.post('becomeTrainer.php', data)
+      AjaxService.post('php/becomeTrainer.php', data)
       .done(function (msg) {
         PubSub.publishSync('becomeTrainerSuccess', msg);
       })
@@ -79,19 +85,61 @@ var requestSender = (function () {
     },
 
     getTrainersList: function (msg, data) {
-      AjaxService.post('getTrainers.php', data)
+      AjaxService.post('php/getTrainers.php', data)
       .done(function (msg) {
         PubSub.publishSync('trainersListReceived', msg);
       });
     },
 
     updateUserData: function (msg, data) {
-      AjaxService.post('updateUserData.php', data)
+      AjaxService.post('php/updateUserData.php', data)
       .done(function (msg) {
         PubSub.publishSync('updateUserDataSuccess', msg);
       })
       .fail(function (xhr, status, error) {
         PubSub.publishSync('updateUserDataFail', { xhr: xhr, status: status, error: error });
+      });
+    },
+
+    deleteCategory: function (msg, data) {
+      AjaxService.post('php/deleteCategory.php', data)
+      .done(function (msg) {
+        PubSub.publishSync('deleteCategorySuccess', msg);
+      });
+    },
+
+    createCategory: function (msg, data) {
+      AjaxService.post('php/createCategory.php', data)
+      .done(function (msg) {
+        PubSub.publishSync('createCategorySuccess', msg);
+      });
+    },
+
+    deleteTopic: function (msg, data) {
+      AjaxService.post('php/deleteTopic.php', data)
+      .done(function (msg) {
+        PubSub.publishSync('deleteTopicSuccess', msg);
+      });
+    },
+
+    createTopic: function (msg, data) {
+      AjaxService.post('php/createTopic.php', data)
+      .done(function (msg) {
+        PubSub.publishSync('createTopicSuccess', msg);
+      });
+    },
+
+    deleteSubCategory: function (msg, data) {
+      AjaxService.post('php/deleteSubCategory.php', data)
+      .done(function (msg) {
+        PubSub.publishSync('deleteSubCategorySuccess', msg);
+      });
+    },
+
+    createSubCategory: function (msg, data) {
+      AjaxService.post('php/createSubCategory.php', data)
+      .done(function (msg) {
+        PubSub.publishSync('createSubCategorySuccess', msg);
       });
     }
   };

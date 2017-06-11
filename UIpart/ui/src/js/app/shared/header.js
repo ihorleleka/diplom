@@ -1,16 +1,17 @@
 import $ from 'jquery';
+import PubSub from 'pubsub-js';
 
 var headerFunction = (function () {
   'use strict';
 
   var headerFunction = {
-
+    closeSubNav: true,
     lastScrollTop: 0,
     SCROLL_SPEED_LATENCY: 15,
     subNavOpen: false,
 
     init: function () {
-
+      headerFunction.bindEvents();
       headerFunction.secondaryNavigation();
       headerFunction.closeSecondaryNav();
 
@@ -19,10 +20,18 @@ var headerFunction = (function () {
       });
     },
 
+    bindEvents: function () {
+      PubSub.subscribe('lockNavOpen', headerFunction.lockNavOpen);
+    },
+
+    lockNavOpen: function () {
+      headerFunction.closeSubNav = false;
+    },
+
     closeSecondaryNav: function () {
       $('body').click(function (event) {
 
-        if (headerFunction.subNavOpen == true) {
+        if (headerFunction.subNavOpen == true && headerFunction.closeSubNav == true) {
           if ((event.target.className != 'sub-navigation js-sub-navigation') &&
             (event.target.className != 'js-has-sub-navigation has-sub-navigation') &&
             (event.target.className != 'js-enable-third-level third-level') &&

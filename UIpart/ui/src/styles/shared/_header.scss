@@ -11,6 +11,71 @@
 	@include fontSmooth();
 	@include prefixed(transition, transform .6s ease);
 
+	li {
+		a {
+			display: inline-block !important;
+			&.delete {
+				margin: 0 !important;
+				padding: 0 !important;
+				text-align: left !important;
+				text-decoration: none !important;
+			}
+			&.delete-approve {
+				margin: 0 !important;
+				padding: 0 !important;
+				text-align: left !important;
+				text-decoration: none !important;
+				color: #f00 !important;
+			}
+		}
+	}
+
+	.icon-close, .icon-check {
+		cursor: pointer;
+		font-size: 13px !important;
+		text-decoration: none;
+	}
+
+	li.edit { 
+	  min-width: 10% !important;
+	  max-width: 150px !important;
+	  vertical-align: middle !important;
+	  margin-left: 15px !important;
+	  margin-bottom: 10px !important;
+
+	  a {
+	    font-weight: 500 !important;
+	    background: rgba(111, 255, 0, 0.46)!important;
+	  	font-size: 35px!important;
+   		min-height: 35px!important;
+   		text-align: center !important;
+	  	line-height: inherit !important;
+	  	width: 100% !important;
+
+	  	i {
+	  		color: #0079c8 !important;
+	  	}
+	  	&:hover {
+	  		text-decoration: none !important;
+	  		background: orange !important;
+	  	}
+	  }
+	}
+
+	li.edit-submit {
+		input {
+			display:inline-block !important;
+			margin-left:20px !important;
+		}
+		a {
+			font-size: 20px !important;
+			margin: 0 !important;
+			padding: 0 !important;
+			display: inline-block !important;
+			text-decoration: none !important;
+		}
+	}
+
 	.utility-navigation {
 		text-align: center;
 
@@ -76,16 +141,25 @@
 		li {
 			display:inline-block;
 			height:100%;
-			a{
+			a {
 				@include font-size(1.2);
+				display: inline-block;
 				letter-spacing: 1px;
 				padding: 0px 20px;
 				display: block;
 				color: $brand-baby-blue;
 				line-height:40px;
-				&:hover{
+				&:hover {
 					color:$brand-baby-blue;
 					background:$brand-primary-dark;
+
+					&.changeMode {
+						background: $brand-orange;
+					}
+				}
+				&.changeMode {
+					color: $black;
+					background: orange;
 				}
 				.icon{
 					vertical-align:middle;
@@ -728,6 +802,41 @@
 
 			}
 		}
+			li.edit { 
+			  text-align: center !important;
+		  	vertical-align: middle !important;
+
+			  a {
+			    font-weight: 500 !important;
+			    background: rgba(111, 255, 0, 0.46)!important;
+			  	font-size: 35px!important;
+		   		min-height: 35px!important;
+			  	line-height: inherit !important;
+
+			  	i {
+			  		color: #0079c8 !important;
+			  	}
+			  	&:hover {
+			  		text-decoration: none !important;
+			  		background: orange !important;
+			  	}
+			  }
+			}
+
+			li.edit-submit {
+				text-align: center;
+
+				input {
+					margin-top:20px !important;
+					padding: 10px !important;
+				}
+				a {
+					font-size: 55px !important;
+					margin: 0 !important;
+					padding: 0 !important;
+					text-decoration: none !important;
+				}
+			}
 
 	  	> li {
 			position: relative;
