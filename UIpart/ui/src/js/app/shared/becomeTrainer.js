@@ -81,7 +81,7 @@ var becomeTrainer = (function () {
     checkOption: function (optionId) {
       var result = true;
       becomeTrainer.userInfo.roles.forEach(function (obj) {
-        if (obj.division_id == optionId) {
+        if (obj.division_id == optionId && obj.role_id != 2) {
           result = false;
         }
       });
