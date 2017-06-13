@@ -23,7 +23,6 @@ var accountService = (function () {
       PubSub.subscribe('trainersListReceived', accountService.trainersListReceived);
       PubSub.subscribe('updateUserDataSuccess', accountService.updateUserDataSuccess);
       PubSub.subscribe('updateUserDataFail', accountService.updateUserDataFail);
-      accountService.enableEditFunctionality();
       var $logout = $('.pages .profile button.logout');
       $logout.click(function () {
         document.cookie = 'olymp_dp_cookie=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
@@ -40,10 +39,15 @@ var accountService = (function () {
       });
     },
 
-    enableEditFunctionality: function () {
-      var $profilePage = $('.page.profile');
-      var $userInfoBlock = $profilePage.find('.user-info');
-      var $userEmailBlock = $profilePage.find('.user-email');
+    isInRole: function (roles, roleId) {
+      var result = false;
+      roles.forEach(function (obj) {
+        if (obj.role_id == roleId) {
+          result = true;
+        }
+      });
+
+      return result;
     },
 
     userInfoReceived: function (msg, data) {
@@ -54,6 +58,12 @@ var accountService = (function () {
     },
 
     additionalInfoBlockHandle: function () {
+      if (accountService.isInRole(accountService.userInfo.roles, '1') ||
+        accountService.isInRole(accountService.userInfo.roles, '2')) {
+        $('.page.userAddInfo').remove();
+        $('a[dest="userAddInfo"]').remove();
+      }
+
       if (accountService.userInfo.additionalInfo) {
         var $additionalInfoPage = $('.page.userAddInfo');
         $('a[dest="userAddInfo"] button')

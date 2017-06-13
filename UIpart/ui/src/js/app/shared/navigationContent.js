@@ -52,7 +52,7 @@ var navigationContent = (function () {
       return `
             <li>
             <a href="${category.page_id}" reserved="${category.reserved}"
-            class="" dest="${category.page_id}" target="">
+            class="category" item_id="${category.id}" dest="${category.page_id}" target="">
             ${category.name}
             </a>
             </li>`;
@@ -118,7 +118,7 @@ var navigationContent = (function () {
 
       data.forEach(function (item) {
         if (item.page_id != null && item.page_id.length > 0) {
-          navigationContent.$pages.append(`<div class="page" level="${level}"
+          navigationContent.$pages.append(`<div class="page editable container" level="${level}"
             item_id="${item.id}" name="${item.page_id}"></div>`);
         }
 

@@ -70,6 +70,7 @@ var editMode = (function () {
       editMode.categoriesTopicsEdit();
       editMode.subcategoriesEdit();
       editMode.addDeleteButtons();
+      editMode.addPostsFunctionality();
     },
 
     addDeleteButtons: function () {
@@ -119,6 +120,7 @@ var editMode = (function () {
       $('.sub-navigation-inner')
       .append(`<ul class="sub-category" style="max-height: initial;"><li class="edit topic">
         <a><i style="vertical-align: middle;" class="icon-hospital-ver-2"></i></li></ul>`);
+      editMode.addTopicToEmptyCategory($('a.category'));
     },
 
     categoriesEdit: function () {
@@ -182,6 +184,49 @@ var editMode = (function () {
       } else if (tag.hasClass('categoryAdd')) {
         PubSub.publishSync('createNewCategory', { name: value });
       }
+    },
+
+    addTopicToEmptyCategory: function (tags) {
+      tags.each(function (index, value) {
+        var $element = $(value);
+        if (!$element.hasClass('js-has-sub-navigation')) {
+          $element.parent().append(`<div class="relative-arrow">
+            <div class="arrow-down"></div>
+            </div>
+            <div class="sub-navigation js-sub-navigation">
+              <div class="sub-navigation-inner" item_id="${$element.attr('item_id')}">
+                <ul class="sub-category" style="max-height: initial;">
+                  <li class="edit topic">
+                    <a><i style="vertical-align: middle;" class="icon-hospital-ver-2"></i></a>
+                  </li>
+                </ul>
+              </div>
+            </div>`);
+          var $subNav = $element.parent().find('.js-sub-navigation');
+          $element.hover(function () {
+            $subNav.show();
+          });
+
+          $subNav.hover(function () {
+            $subNav.show();
+          },
+
+          function () {
+            $subNav.hide();
+          });
+        }
+      });
+    },
+
+    addPostsFunctionality: function () {
+      $('.page.editable').prepend(`<div class="row">
+        <div class="col-md-4 col-md-offset-4 col-xs-12 col-xs-offset-0">
+        <a class="addPost"><i style="vertical-align: middle;" class="icon-hospital-ver-2"></i></a>
+        </div>
+        </div>`);
+      $('a.addPost').click(function () {
+
+      });
     }
   };
   return {

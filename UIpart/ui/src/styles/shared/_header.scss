@@ -45,7 +45,7 @@
 
 	  a {
 	    font-weight: 500 !important;
-	    background: rgba(111, 255, 0, 0.46)!important;
+	    background: #0079c8 !important;
 	  	font-size: 35px!important;
    		min-height: 35px!important;
    		text-align: center !important;
@@ -53,11 +53,11 @@
 	  	width: 100% !important;
 
 	  	i {
-	  		color: #0079c8 !important;
+	  		color: white !important;
 	  	}
 	  	&:hover {
 	  		text-decoration: none !important;
-	  		background: orange !important;
+	  		background: #00725f !important;
 	  	}
 	  }
 	}
@@ -455,11 +455,11 @@
 				}
 			}
 			.sub-navigation-inner {
-				max-width: 960px;
+				// max-width: 960px;
 				margin: auto;
 
 				ul.sub-category {
-					max-width: 33%;
+					max-width: 20%;
 					float: left;
 
 					li {
@@ -799,44 +799,63 @@
 			  .sub-level-arrow {
 				position: relative;
 			  }
-
 			}
 		}
-			li.edit { 
-			  text-align: center !important;
-		  	vertical-align: middle !important;
 
-			  a {
-			    font-weight: 500 !important;
-			    background: rgba(111, 255, 0, 0.46)!important;
-			  	font-size: 35px!important;
-		   		min-height: 35px!important;
-			  	line-height: inherit !important;
+		a.delete {
+			display: block;
+			width: auto;
+			margin: 0;
+			position: relative;
+			top: -60px;
+			padding-left: 0px !important;
+			float: right !important;
+			right: 1%
+		}
+		a.delete-approve {
+			display: block;
+			width: auto;
+			margin: 0;
+			position: relative;
+			top: -60px;
+			float: right !important;
+		}
+		li.edit { 
+		  text-align: center !important;
+	  	vertical-align: middle !important;
+	  	margin-top: 20px !important;
 
-			  	i {
-			  		color: #0079c8 !important;
-			  	}
-			  	&:hover {
-			  		text-decoration: none !important;
-			  		background: orange !important;
-			  	}
-			  }
+		  a {
+		    font-weight: 500 !important;
+		    background: #0079c8 !important;
+		  	font-size: 35px!important;
+	   		min-height: 35px!important;
+		  	line-height: inherit !important;
+
+		  	i {
+		  		color: white !important;
+		  	}
+		  	&:hover {
+		  		text-decoration: none !important;
+		  		background: orange !important;
+		  	}
+		  }
+		}
+
+		li.edit-submit {
+			text-align: center;
+
+			input {
+				margin-top:20px !important;
+				padding: 10px !important;
 			}
-
-			li.edit-submit {
-				text-align: center;
-
-				input {
-					margin-top:20px !important;
-					padding: 10px !important;
-				}
-				a {
-					font-size: 55px !important;
-					margin: 0 !important;
-					padding: 0 !important;
-					text-decoration: none !important;
-				}
+			a {
+				font-size: 55px !important;
+				margin: 0 !important;
+				padding: 0 !important;
+				text-decoration: none !important;
 			}
+		}
 
 	  	> li {
 			position: relative;
@@ -881,9 +900,9 @@
 
 				&:first-child {
 				  .sub-level-arrow {
-					  float: right;
-					  right: 0;
+					  float: left;
 					  top: 40%;
+					  left: -1%;
 					  &:after{
 						font-family: bupa-iconfonts;
 						content: "\e623";
