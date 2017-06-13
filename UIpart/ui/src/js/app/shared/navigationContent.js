@@ -119,7 +119,7 @@ var navigationContent = (function () {
       data.forEach(function (item) {
         if (item.page_id != null && item.page_id.length > 0) {
           navigationContent.$pages.append(`<div class="page editable container" level="${level}"
-            item_id="${item.id}" name="${item.page_id}"></div>`);
+            item_id="${item.id}" name="${item.page_id}"/>`);
         }
 
         navigationContent.createRelatedPages(item.children, level + 1);

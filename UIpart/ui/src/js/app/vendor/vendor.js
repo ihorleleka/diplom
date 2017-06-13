@@ -1,4 +1,5 @@
 
+require('ckeditor');
 require('matchHeight');
 require('typeahead');
 require('bootstrapDatepicker');

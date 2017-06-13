@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import PubSub from 'pubsub-js';
+import editor from 'ckeditor';
 
 var editMode = (function () {
   'use strict';
@@ -219,14 +220,47 @@ var editMode = (function () {
     },
 
     addPostsFunctionality: function () {
-      $('.page.editable').prepend(`<div class="row">
+      $('.page.editable').prepend(`<div class="row addNewPost">
         <div class="col-md-4 col-md-offset-4 col-xs-12 col-xs-offset-0">
         <a class="addPost"><i style="vertical-align: middle;" class="icon-hospital-ver-2"></i></a>
         </div>
         </div>`);
-      $('a.addPost').click(function () {
+      editMode.bindAddPostsEvents();
+    },
 
+    bindAddPostsEvents: function () {
+      $('a.addPost').click(function () {
+        var $tag = $(this);
+        var $currentPage = $tag.parent().parent().parent();
+        var level = $currentPage.attr('level');
+        var pageId = $currentPage.attr('name');
+        $currentPage.prepend(`<div id="${level + pageId}"/>`);
+        var editor = CKEDITOR.appendTo(level + pageId);
+        $tag.html('Зберегти');
+        $tag.off();
+        $tag.click(function () {
+          var $tag = $(this);
+          var $currentPage = $tag.parent().parent().parent();
+          var level = $currentPage.attr('level');
+          var pageId = $currentPage.attr('name');
+          var computed = level + pageId;
+          var instance = editMode.first(CKEDITOR.instances);
+          var data = instance.getData();
+          if (data != '') {
+            $currentPage.prepend(data);
+            PubSub.publishSync('createPost', { pageId: pageId, data: data });
+          }
+
+          instance.destroy();
+          $(`#${computed}`).remove();
+          $('.addNewPost').remove();
+          editMode.addPostsFunctionality();
+        });
       });
+    },
+
+    first: function (obj) {
+      for (var a in obj) return obj[a];
     }
   };
   return {
