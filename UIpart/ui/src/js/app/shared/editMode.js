@@ -18,6 +18,12 @@ var editMode = (function () {
       PubSub.subscribe('deleteTopicSuccess', editMode.reload);
       PubSub.subscribe('createSubCategorySuccess', editMode.reload);
       PubSub.subscribe('deleteSubCategorySuccess', editMode.reload);
+      PubSub.subscribe('createPostSuccess', editMode.createPostSuccess);
+      PubSub.subscribe('updatePostSuccess', editMode.updatePostSuccess);
+    },
+
+    updatePostSuccess: function (msg, data) {
+      editMode.disableEdit(false);
     },
 
     reload: function () {
@@ -222,10 +228,27 @@ var editMode = (function () {
     addPostsFunctionality: function () {
       $('.page.editable').prepend(`<div class="row addNewPost">
         <div class="col-md-4 col-md-offset-4 col-xs-12 col-xs-offset-0">
-        <a class="addPost"><i style="vertical-align: middle;" class="icon-hospital-ver-2"></i></a>
+        <a class="addPost"><i class="icon-hospital-ver-2"></i></a>
         </div>
         </div>`);
       editMode.bindAddPostsEvents();
+      $('.page.editable .post.editable').each(function (index, post) {
+        var $post = $(post);
+        if (!($post.find('.postIteractoins').length > 0)) {
+          $post.append(`<div class="row postIteractoins">
+            <div class="col-md-2 col-md-offset-8 col-xs-6 col-xs-offset-0">
+            <a class="editCurrentPost"><i class="icon-pencil-solid"></i></a>
+            </div>
+            <div class="col-md-2 col-xs-6">
+            <a class="deleteCurrentPost"><i class="icon-close"></i></a>
+            </div>
+            </div>`);
+        }
+
+      });
+
+      editMode.bindDeletePostsEvents();
+      editMode.bindEditPostsEvents();
     },
 
     bindAddPostsEvents: function () {
@@ -234,7 +257,10 @@ var editMode = (function () {
         var $currentPage = $tag.parent().parent().parent();
         var level = $currentPage.attr('level');
         var pageId = $currentPage.attr('name');
-        $currentPage.prepend(`<div id="${level + pageId}"/>`);
+        if (!($currentPage.find(`#${level + pageId}`).length > 0)) {
+          $currentPage.prepend(`<div id="${level + pageId}"/>`);
+        }
+
         var editor = CKEDITOR.appendTo(level + pageId);
         $tag.html('Зберегти');
         $tag.off();
@@ -244,23 +270,100 @@ var editMode = (function () {
           var level = $currentPage.attr('level');
           var pageId = $currentPage.attr('name');
           var computed = level + pageId;
-          var instance = editMode.first(CKEDITOR.instances);
+          var instance = editMode.current(CKEDITOR.instances);
           var data = instance.getData();
           if (data != '') {
-            $currentPage.prepend(data);
             PubSub.publishSync('createPost', { pageId: pageId, data: data });
           }
 
           instance.destroy();
           $(`#${computed}`).remove();
           $('.addNewPost').remove();
-          editMode.addPostsFunctionality();
         });
       });
     },
 
-    first: function (obj) {
-      for (var a in obj) return obj[a];
+    current: function (obj) {
+      var last = null;
+      for (var a in obj) {
+        last = a;
+      }
+
+      return obj[last];
+    },
+
+    createPostSuccess: function (msg, data) {
+      var pageId = data.pageId;
+      var htmlToInsert = data.data;
+      var findExpression = '[name="' + pageId + '"]';
+      var $page = $('.pages').find(findExpression);
+      $page.prepend(`<div item_id="${data.postId}" class="post editable">${htmlToInsert}</div>`);
+      editMode.addPostsFunctionality();
+      editMode.bindDeletePostsEvents();
+      editMode.bindEditPostsEvents();
+    },
+
+    bindDeletePostsEvents: function () {
+      $('a.deleteCurrentPost').click(function () {
+        var $element = $(this);
+        var $post = $element.parent().parent().parent();
+        PubSub.publishSync('deletePost', { postId: $post.attr('item_id') });
+        $post.remove();
+      });
+    },
+
+    bindEditPostsEvents: function () {
+      $('a.editCurrentPost').click(function () {
+        var $element = $(this);
+        if ($element.attr('disabled')) {
+          return;
+        }
+
+        editMode.disableEdit(true);
+        var $post = $element.parent().parent().parent();
+        var $page = $post.parent();
+        var level = $page.attr('level');
+        var pageId = $page.attr('name');
+        var postId = $post.attr('item_id');
+        $post.find('.postIteractoins').remove();
+        var data = $post.html();
+        $post.html('');
+        $post.prepend(`<div id="${level + pageId + postId}"/>`);
+        CKEDITOR.appendTo(level + pageId + postId);
+        $post.append(`<div class="row addNewPost">
+        <div class="col-md-4 col-md-offset-4 col-xs-12 col-xs-offset-0">
+        <a class="addPost">Зберегти</a>
+        </div>
+        </div>`);
+        var instance = editMode.current(CKEDITOR.instances);
+        instance.setData(data);
+        $post.find('a.addPost').click(function () {
+          var $post = $(this).parent().parent().parent();
+          var postId = $post.attr('item_id');
+          var instance = editMode.current(CKEDITOR.instances);
+          var data = instance.getData();
+          if (data != '') {
+            PubSub.publishSync('updatePost', { postId: postId, data: data });
+          }
+
+          instance.destroy();
+          $post.html(data);
+          $post.append(`<div class="row postIteractoins">
+            <div class="col-md-2 col-md-offset-8 col-xs-6 col-xs-offset-0">
+            <a class="editCurrentPost"><i class="icon-pencil-solid"></i></a>
+            </div>
+            <div class="col-md-2 col-xs-6">
+            <a class="deleteCurrentPost"><i class="icon-close"></i></a>
+            </div>
+            </div>`);
+          editMode.bindDeletePostsEvents();
+          editMode.bindEditPostsEvents();
+        });
+      });
+    },
+
+    disableEdit: function (value) {
+      $('a.editCurrentPost').attr('disabled', value);
     }
   };
   return {

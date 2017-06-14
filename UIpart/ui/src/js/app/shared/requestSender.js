@@ -25,6 +25,9 @@ var requestSender = (function () {
       PubSub.subscribe('deleteTopic', requestSender.deleteTopic);
       PubSub.subscribe('createNewSubCategory', requestSender.createSubCategory);
       PubSub.subscribe('deleteSubCategory', requestSender.deleteSubCategory);
+      PubSub.subscribe('createPost', requestSender.createPost);
+      PubSub.subscribe('deletePost', requestSender.deletePost);
+      PubSub.subscribe('updatePost', requestSender.updatePost);
     },
 
     registrationHandler: function (msg, data) {
@@ -140,6 +143,28 @@ var requestSender = (function () {
       AjaxService.post('php/createSubCategory.php', data)
       .done(function (msg) {
         PubSub.publishSync('createSubCategorySuccess', msg);
+      });
+    },
+
+    createPost: function (msg, data) {
+      AjaxService.post('php/createPost.php', data)
+      .done(function (msg) {
+        data.postId = msg;
+        PubSub.publishSync('createPostSuccess', data);
+      });
+    },
+
+    deletePost: function (msg, data) {
+      AjaxService.post('php/deletePost.php', data)
+      .done(function (msg) {
+        PubSub.publishSync('deletePostSuccess', msg);
+      });
+    },
+
+    updatePost: function (msg, data) {
+      AjaxService.post('php/updatePost.php', data)
+      .done(function (msg) {
+        PubSub.publishSync('updatePostSuccess', msg);
       });
     }
   };

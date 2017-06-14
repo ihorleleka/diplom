@@ -14,9 +14,10 @@ var navigationContent = (function () {
     init: function () {
       return navigationContent.initHeaderNavigation()
         .then(function () {
-          navigationContent.createRelatedPages(navigationContent.data, 0);
+          navigationContent.createRelatedPages(navigationContent.data.categories, 0);
         })
-        .then(navigationContent.initHeaderTop);
+        .then(navigationContent.initHeaderTop)
+        .then(navigationContent.initPagesContent);
     },
 
     initHeaderNavigation: function () {
@@ -37,7 +38,7 @@ var navigationContent = (function () {
     },
 
     createNavigation: function () {
-      navigationContent.data.forEach(function (category) {
+      navigationContent.data.categories.forEach(function (category) {
         if (category.children.length > 0) {
           navigationContent.$primaryLinks
           .append(navigationContent.categoryWithChildren(category));
@@ -123,6 +124,14 @@ var navigationContent = (function () {
         }
 
         navigationContent.createRelatedPages(item.children, level + 1);
+      });
+    },
+
+    initPagesContent: function () {
+      navigationContent.data.posts.forEach(function (post) {
+        var findExpression = '[name="' + post.page_id + '"]';
+        var $page = $('.pages').find(findExpression);
+        $page.prepend(`<div item_id="${post.id}" class="post editable">${post.Value}</div>`);
       });
     }
   };
