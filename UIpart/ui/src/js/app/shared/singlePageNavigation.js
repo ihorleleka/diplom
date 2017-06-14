@@ -11,9 +11,9 @@ var singlePageNavigation = (function () {
     regPage: $('.pages .regPage'),
 
     init: function () {
-      let mainPage = singlePageNavigation.pagesContainer.find('[name="main-page"]');
-      singlePageNavigation.showSpecificPage(mainPage);
       singlePageNavigation.bindEvents();
+      var $firstLink = $('.primary li').first();
+      $firstLink.find('a').click();
     },
 
     bindEvents: function () {
