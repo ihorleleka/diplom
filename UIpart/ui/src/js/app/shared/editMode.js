@@ -49,7 +49,6 @@ var editMode = (function () {
     },
 
     updatePostSuccess: function (msg, data) {
-      editMode.disableEdit(false);
     },
 
     reload: function () {

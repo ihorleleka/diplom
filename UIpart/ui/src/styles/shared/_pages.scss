@@ -32,6 +32,10 @@
         p {
             text-align: left;
             margin: auto;
+
+            strong {
+                font-weight: 700;
+            }
         }
         a {
             &.addPost {
@@ -175,8 +179,6 @@
             text-align: left;
 
             a {
-                margin-left: 10%;
-
                 i {
                     font-size: 35px;
                 }
