@@ -6,6 +6,25 @@ var editMode = (function () {
   'use strict';
 
   var editMode = {
+    addNewPostTemplate: `<div class="row addNewPost">
+        <div class="col-md-4 col-md-offset-4 col-xs-12 col-xs-offset-0">
+        <a class="addPost"><i class="icon-hospital-ver-2"></i></a>
+        </div>
+        </div>`,
+    saveTemplate: `<div class="row addNewPost">
+    <div class="col-md-4 col-md-offset-4 col-xs-12 col-xs-offset-0">
+    <a class="addPost">Зберегти</a>
+    </div>
+    </div>`,
+    postIteractionsTemplate: `<div class="row postIteractoins">
+            <div class="col-md-2 col-md-offset-8 col-xs-6 col-xs-offset-0">
+            <a class="editCurrentPost"><i class="icon-pencil-solid"></i></a>
+            </div>
+            <div class="col-md-2 col-xs-6">
+            <a class="deleteCurrentPost"><i class="icon-close"></i></a>
+            </div>
+            </div>`,
+
     init: function () {
       editMode.bindEvents();
     },
@@ -93,8 +112,8 @@ var editMode = (function () {
             itemClass = 'subCategory';
           }
 
-          $item.parent().append(`<a item_id="${$item.attr('item_id')}" class="delete ${itemClass}">
-            <i class="icon-close"></i></a>`);
+          $(`<a item_id="${$item.attr('item_id')}" class="delete ${itemClass}">
+            <i class="icon-close"></i></a>`).insertAfter($item.parent().find('a').first());
         }
       });
 
@@ -120,13 +139,13 @@ var editMode = (function () {
 
     addDivisionButtonsInit: function () {
       $('.primary').append(`<li class="edit">
-        <a><i style="vertical-align: middle;" class="icon-hospital-ver-2"/></li>`);
+        <a><i class="icon-hospital-ver-2"/></li>`);
       $('.sub-navigation-inner .sub-category')
       .append(`<li class="edit third-level">
-        <a><i style="vertical-align: middle;" class="icon-hospital-ver-2"></i></li>`);
+        <a><i class="icon-hospital-ver-2"></i></li>`);
       $('.sub-navigation-inner')
       .append(`<ul class="sub-category" style="max-height: initial;"><li class="edit topic">
-        <a><i style="vertical-align: middle;" class="icon-hospital-ver-2"></i></li></ul>`);
+        <a><i class="icon-hospital-ver-2"></i></li></ul>`);
       editMode.addTopicToEmptyCategory($('a.category'));
     },
 
@@ -146,7 +165,6 @@ var editMode = (function () {
           $(this).addClass('subCategoryAdd');
           var subNavigation = $(this).parents('.sub-navigation')[0];
           var atag = $($(subNavigation).parent()).find('.js-has-sub-navigation');
-
           editMode.handleParentNodeAfterAddNewClick($(this).parent());
         }
       });
@@ -197,18 +215,7 @@ var editMode = (function () {
       tags.each(function (index, value) {
         var $element = $(value);
         if (!$element.hasClass('js-has-sub-navigation')) {
-          $element.parent().append(`<div class="relative-arrow">
-            <div class="arrow-down"></div>
-            </div>
-            <div class="sub-navigation js-sub-navigation">
-              <div class="sub-navigation-inner" item_id="${$element.attr('item_id')}">
-                <ul class="sub-category" style="max-height: initial;">
-                  <li class="edit topic">
-                    <a><i style="vertical-align: middle;" class="icon-hospital-ver-2"></i></a>
-                  </li>
-                </ul>
-              </div>
-            </div>`);
+          $element.parent().append(editMode.buildEmptyCategoryDropdown($element));
           var $subNav = $element.parent().find('.js-sub-navigation');
           $element.hover(function () {
             $subNav.show();
@@ -225,36 +232,45 @@ var editMode = (function () {
       });
     },
 
+    buildEmptyCategoryDropdown: function ($element) {
+      return `<div class="relative-arrow">
+            <div class="arrow-down"></div>
+            </div>
+            <div class="sub-navigation js-sub-navigation">
+              <div class="sub-navigation-inner" item_id="${$element.attr('item_id')}">
+                <ul class="sub-category" style="max-height: initial;">
+                  <li class="edit topic">
+                    <a><i class="icon-hospital-ver-2"></i></a>
+                  </li>
+                </ul>
+              </div>
+            </div>`;
+    },
+
     addPostsFunctionality: function () {
-      $('.page.editable').prepend(`<div class="row addNewPost">
-        <div class="col-md-4 col-md-offset-4 col-xs-12 col-xs-offset-0">
-        <a class="addPost"><i class="icon-hospital-ver-2"></i></a>
-        </div>
-        </div>`);
-      editMode.bindAddPostsEvents();
+      $('.page.editable').prepend(editMode.addNewPostTemplate);
       $('.page.editable .post.editable').each(function (index, post) {
         var $post = $(post);
         if (!($post.find('.postIteractoins').length > 0)) {
-          $post.append(`<div class="row postIteractoins">
-            <div class="col-md-2 col-md-offset-8 col-xs-6 col-xs-offset-0">
-            <a class="editCurrentPost"><i class="icon-pencil-solid"></i></a>
-            </div>
-            <div class="col-md-2 col-xs-6">
-            <a class="deleteCurrentPost"><i class="icon-close"></i></a>
-            </div>
-            </div>`);
+          $post.append(editMode.postIteractionsTemplate);
         }
 
       });
 
+      editMode.bindAddPostsEvents();
       editMode.bindDeletePostsEvents();
       editMode.bindEditPostsEvents();
     },
 
+    removePostsFunctionality: function () {
+      $('.row.postIteractoins').remove();
+      $('.row.addNewPost').remove();
+    },
+
     bindAddPostsEvents: function () {
       $('a.addPost').click(function () {
-        var $tag = $(this);
-        var $currentPage = $tag.parent().parent().parent();
+        var $currentPage = $(this).parent().parent().parent();
+        editMode.removePostsFunctionality();
         var level = $currentPage.attr('level');
         var pageId = $currentPage.attr('name');
         if (!($currentPage.find(`#${level + pageId}`).length > 0)) {
@@ -262,23 +278,22 @@ var editMode = (function () {
         }
 
         var editor = CKEDITOR.appendTo(level + pageId);
-        $tag.html('Зберегти');
-        $tag.off();
+        $(editMode.saveTemplate).insertAfter(`#${level + pageId}`);
+        var $tag = $currentPage.find('.row.addNewPost .addPost');
+
         $tag.click(function () {
-          var $tag = $(this);
-          var $currentPage = $tag.parent().parent().parent();
+          var $currentPage = $(this).parent().parent().parent();
           var level = $currentPage.attr('level');
           var pageId = $currentPage.attr('name');
-          var computed = level + pageId;
           var instance = editMode.current(CKEDITOR.instances);
           var data = instance.getData();
+          $(`#${level + pageId}`).remove();
           if (data != '') {
             PubSub.publishSync('createPost', { pageId: pageId, data: data });
           }
 
           instance.destroy();
-          $(`#${computed}`).remove();
-          $('.addNewPost').remove();
+          editMode.removePostsFunctionality();
         });
       });
     },
@@ -297,16 +312,14 @@ var editMode = (function () {
       var htmlToInsert = data.data;
       var findExpression = '[name="' + pageId + '"]';
       var $page = $('.pages').find(findExpression);
-      $page.prepend(`<div item_id="${data.postId}" class="post editable">${htmlToInsert}</div>`);
+      $page.prepend(`<div item_id="${data.postId}"
+        class="post editable">${htmlToInsert}</div>`);
       editMode.addPostsFunctionality();
-      editMode.bindDeletePostsEvents();
-      editMode.bindEditPostsEvents();
     },
 
     bindDeletePostsEvents: function () {
       $('a.deleteCurrentPost').click(function () {
-        var $element = $(this);
-        var $post = $element.parent().parent().parent();
+        var $post = $(this).parent().parent().parent();
         PubSub.publishSync('deletePost', { postId: $post.attr('item_id') });
         $post.remove();
       });
@@ -314,27 +327,17 @@ var editMode = (function () {
 
     bindEditPostsEvents: function () {
       $('a.editCurrentPost').click(function () {
-        var $element = $(this);
-        if ($element.attr('disabled')) {
-          return;
-        }
-
-        editMode.disableEdit(true);
-        var $post = $element.parent().parent().parent();
+        var $post = $(this).parent().parent().parent();
+        editMode.removePostsFunctionality();
         var $page = $post.parent();
         var level = $page.attr('level');
         var pageId = $page.attr('name');
         var postId = $post.attr('item_id');
-        $post.find('.postIteractoins').remove();
         var data = $post.html();
         $post.html('');
         $post.prepend(`<div id="${level + pageId + postId}"/>`);
         CKEDITOR.appendTo(level + pageId + postId);
-        $post.append(`<div class="row addNewPost">
-        <div class="col-md-4 col-md-offset-4 col-xs-12 col-xs-offset-0">
-        <a class="addPost">Зберегти</a>
-        </div>
-        </div>`);
+        $post.append(editMode.saveTemplate);
         var instance = editMode.current(CKEDITOR.instances);
         instance.setData(data);
         $post.find('a.addPost').click(function () {
@@ -348,22 +351,9 @@ var editMode = (function () {
 
           instance.destroy();
           $post.html(data);
-          $post.append(`<div class="row postIteractoins">
-            <div class="col-md-2 col-md-offset-8 col-xs-6 col-xs-offset-0">
-            <a class="editCurrentPost"><i class="icon-pencil-solid"></i></a>
-            </div>
-            <div class="col-md-2 col-xs-6">
-            <a class="deleteCurrentPost"><i class="icon-close"></i></a>
-            </div>
-            </div>`);
-          editMode.bindDeletePostsEvents();
-          editMode.bindEditPostsEvents();
+          editMode.addPostsFunctionality();
         });
       });
-    },
-
-    disableEdit: function (value) {
-      $('a.editCurrentPost').attr('disabled', value);
     }
   };
   return {
