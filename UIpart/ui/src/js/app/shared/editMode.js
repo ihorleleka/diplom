@@ -7,21 +7,28 @@ var editMode = (function () {
 
   var editMode = {
     addNewPostTemplate: `<div class="row addNewPost">
-        <div class="col-md-4 col-md-offset-4 col-xs-12 col-xs-offset-0">
-        <a class="addPost"><i class="icon-hospital-ver-2"></i></a>
+        <div class="col-md-3 col-md-offset-3 col-xs-6 col-xs-offset-0">
+        <a title="Створити новий запис" class="addPost"><i class="icon-hospital-ver-2"></i></a>
+        </div>
+        <div class="col-md-3 col-xs-6 col-xs-offset-0">
+        <a title="Завантажити документи на сторінку" class="addFilePost">
+        <i class="icon-download"></i></a>
+        <input type="file" multiple="multiple" class="inputFile"
+        accept=".xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf,.odt,.rtf"></a>
         </div>
         </div>`,
     saveTemplate: `<div class="row addNewPost">
     <div class="col-md-4 col-md-offset-4 col-xs-12 col-xs-offset-0">
-    <a class="addPost">Зберегти</a>
+    <a title="Зберегти" class="addPost">Зберегти</a>
     </div>
     </div>`,
     postIteractionsTemplate: `<div class="row postIteractoins">
             <div class="col-md-2 col-md-offset-8 col-xs-6 col-xs-offset-0">
-            <a class="editCurrentPost"><i class="icon-pencil-solid"></i></a>
+            <a title="Редагувати запис" class="editCurrentPost">
+            <i class="icon-pencil-solid"></i></a>
             </div>
             <div class="col-md-2 col-xs-6">
-            <a class="deleteCurrentPost"><i class="icon-close"></i></a>
+            <a title="Видалити запис" class="deleteCurrentPost"><i class="icon-close"></i></a>
             </div>
             </div>`,
 
@@ -112,8 +119,9 @@ var editMode = (function () {
             itemClass = 'subCategory';
           }
 
-          $(`<a item_id="${$item.attr('item_id')}" class="delete ${itemClass}">
-            <i class="icon-close"></i></a>`).insertAfter($item.parent().find('a').first());
+          $(`<a title="Видалити розділ" item_id="${$item.attr('item_id')}"
+            class="delete ${itemClass}"><i class="icon-close"></i></a>`)
+          .insertAfter($item.parent().find('a').first());
         }
       });
 
@@ -139,13 +147,13 @@ var editMode = (function () {
 
     addDivisionButtonsInit: function () {
       $('.primary').append(`<li class="edit">
-        <a><i class="icon-hospital-ver-2"/></li>`);
+        <a title="Створити нову категорію"><i class="icon-hospital-ver-2"/></li>`);
       $('.sub-navigation-inner .sub-category')
       .append(`<li class="edit third-level">
-        <a><i class="icon-hospital-ver-2"></i></li>`);
+        <a title="Створити новий підрозділ"><i class="icon-hospital-ver-2"></i></li>`);
       $('.sub-navigation-inner')
       .append(`<ul class="sub-category" style="max-height: initial;"><li class="edit topic">
-        <a><i class="icon-hospital-ver-2"></i></li></ul>`);
+        <a title="Створити новий розділ"><i class="icon-hospital-ver-2"></i></li></ul>`);
       editMode.addTopicToEmptyCategory($('a.category'));
     },
 
@@ -240,7 +248,7 @@ var editMode = (function () {
               <div class="sub-navigation-inner" item_id="${$element.attr('item_id')}">
                 <ul class="sub-category" style="max-height: initial;">
                   <li class="edit topic">
-                    <a><i class="icon-hospital-ver-2"></i></a>
+                    <a title="Створити новий розділ"><i class="icon-hospital-ver-2"></i></a>
                   </li>
                 </ul>
               </div>
@@ -260,6 +268,7 @@ var editMode = (function () {
       editMode.bindAddPostsEvents();
       editMode.bindDeletePostsEvents();
       editMode.bindEditPostsEvents();
+      editMode.bindFilesUploadEvents();
     },
 
     removePostsFunctionality: function () {
@@ -354,6 +363,57 @@ var editMode = (function () {
           editMode.addPostsFunctionality();
         });
       });
+    },
+
+    bindFilesUploadEvents: function () {
+      $('.addFilePost').click(function () {
+        var $page = $(this).parent().parent().parent();
+        var pageId = $page.attr('name');
+        var $input = $(this).parent().find('input');
+        $input.click();
+        $input.change(function () {
+          var files = this.files;
+          var data = new FormData();
+          $.each(files, function (key, value) {
+            data.append(key, value);
+          });
+
+          editMode.removePostsFunctionality();
+          $.ajax({
+            url: 'php/uploadfiles.php?uploadfiles',
+            type: 'POST',
+            data: data,
+            cache: false,
+            dataType: 'json',
+            processData: false,
+            contentType: false,
+            success: function (respond, textStatus, jqXHR) {
+              if (typeof respond.error === 'undefined') {
+                var listOfLinks = '<div class="row downloadLinks">';
+                $.each(respond.files, function (key, itemUrl) {
+                 listOfLinks += editMode.createDownloadFileLink(itemUrl);
+               });
+
+                listOfLinks += '';
+                PubSub.publishSync('createPost', { pageId: pageId, data: listOfLinks });
+              }
+            },
+
+            error: function (jqXHR, textStatus, errorThrown) {
+              console.log('ОШИБКИ AJAX запроса: ' + textStatus);
+            }
+          });
+        });
+      });
+    },
+
+    createDownloadFileLink: function (itemUrl) {
+      var itemName = itemUrl.split('/').pop();
+      return `<div class="col-xs-12">
+      <a target="_blank" href="${itemUrl}">
+        <i class="icon-download"></i><span>${itemName}</span>
+      </a>
+      </div>`;
     }
   };
   return {
