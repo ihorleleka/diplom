@@ -27,11 +27,11 @@
     .page {
         text-align: center;
         box-shadow: 0 10px 70px -10px #666;
-        padding: 15px;
+        padding: 30px;
 
         p {
             text-align: left;
-            margin: 0 10%;
+            margin: auto;
         }
         a {
             &.addPost {
@@ -143,6 +143,19 @@
             width: 100%;
             box-shadow: 0 10px 70px -10px #666;
             resize: none;
+        }
+        ul {
+            text-align: left;
+            padding: auto;
+            margin-left: auto;
+            padding: 10px 0px;
+
+            li {
+                padding: auto;
+                margin: auto;
+                list-style-type: circle;
+                list-style-position: inside;
+            }
         }
         .post {
             margin-bottom: 15px;
