@@ -409,8 +409,8 @@ var editMode = (function () {
 
     createDownloadFileLink: function (itemUrl) {
       var itemName = itemUrl.split('/').pop();
-      return `<div class="col-xs-12">
-      <a class="downloadLink" target="_blank" href="${itemUrl}">
+      return `<div class="col-xs-12 downloadRow">
+      <a title="Завантажити файл" class="downloadLink" target="_blank" href="${itemUrl}">
         <i class="icon-download"><b>icon</b></i><span>${itemName}</span>
       </a>
       </div>`;
