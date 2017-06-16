@@ -330,6 +330,16 @@ var editMode = (function () {
       $('a.deleteCurrentPost').click(function () {
         var $post = $(this).parent().parent().parent();
         PubSub.publishSync('deletePost', { postId: $post.attr('item_id') });
+        if ($post.find('.downloadLinks').length > 0) {
+          var links = $post.find('.downloadLinks a').toArray();
+          var files = links.map(function (link) {
+            var link = $(link).attr('href');
+            return link;
+          });
+
+          PubSub.publishSync('deleteFiles', { files: files });
+        }
+
         $post.remove();
       });
     },

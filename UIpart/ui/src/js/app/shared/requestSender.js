@@ -28,6 +28,7 @@ var requestSender = (function () {
       PubSub.subscribe('createPost', requestSender.createPost);
       PubSub.subscribe('deletePost', requestSender.deletePost);
       PubSub.subscribe('updatePost', requestSender.updatePost);
+      PubSub.subscribe('deleteFiles', requestSender.deleteFiles);
     },
 
     registrationHandler: function (msg, data) {
@@ -165,6 +166,16 @@ var requestSender = (function () {
       AjaxService.post('php/updatePost.php', data)
       .done(function (msg) {
         PubSub.publishSync('updatePostSuccess', msg);
+      });
+    },
+
+    deleteFiles: function (msg, data) {
+      AjaxService.post('php/deleteFiles.php', data)
+      .done(function (msg) {
+        PubSub.publishSync('deleteFilesSuccess', msg);
+      })
+      .fail(function (xhr, status, error) {
+        PubSub.publishSync('deleteFilesFail', { xhr: xhr, status: status, error: error });
       });
     }
   };
