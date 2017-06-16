@@ -161,6 +161,68 @@
                 list-style-position: inside;
             }
         }
+        .event, .publishedEvent, .archivedEvent  {
+            .publishEventApprove, .archiveEventApprove {
+                button {
+                    width: 100% !important;
+                    margin-top: 20px;
+                }
+            }
+            .buttons-block {
+                display: block;
+                button {
+                    display: inline-block;
+                    float: left;
+                    margin: 5px 10px;
+                    padding: 0;
+                    line-height: 30px;
+                    min-height: 20px;
+                    font-size: 18px;
+                    background: #0079c8;
+                    width: 14%;
+                    &:first-child {
+                        @media (min-width: $screen-sm-max) {
+                            margin-left: 0;
+                            margin-right: 10px;
+                        }   
+                    }
+                    &:last-child {
+                        @media (min-width: $screen-sm-max) {
+                            margin-left: 10px;
+                            margin-right: 0;
+                        }   
+                    }
+                    @media (max-width: $screen-sm-max) {
+                        width: 100%;
+                    }
+                    i {
+                        line-height: 30px;
+                        font-size: 25px;
+                    }
+                    span {
+                        vertical-align: text-bottom;
+                    }
+                }
+                button.registration {
+                    @media (min-width: $screen-sm-max) {
+                        float: right;
+                        width: 20% !important;
+                    }
+                }
+                .deleteEvent {
+                    @media (min-width: $screen-sm-max) {
+                        float: right;
+                    } 
+                }
+            }
+            .event-info {
+                text-align: left;
+                a {
+                    float: right;
+                    font-size: 15px;
+                }
+            }
+        }
         .post {
             margin-bottom: 15px;
         }

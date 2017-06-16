@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import AjaxService from 'app/mvc/services/AjaxService';
 import login from './login.js';
+import PubSub from 'pubsub-js';
 
 var navigationContent = (function () {
   'use strict';
@@ -12,12 +13,33 @@ var navigationContent = (function () {
     $pages: $('.pages'),
 
     init: function () {
+      PubSub.subscribe('eventsInfoReceived', navigationContent.eventsInfoReceived);
       return navigationContent.initHeaderNavigation()
         .then(function () {
           navigationContent.createRelatedPages(navigationContent.data.categories, 0);
         })
         .then(navigationContent.initHeaderTop)
         .then(navigationContent.initPagesContent);
+    },
+
+    eventsInfoReceived: function (msg, data) {
+      data.forEach(function (item) {
+        navigationContent.$pages.find('.container').first()
+        .append(`<div class="page olympPage editable hidden"
+          item_id="${item.id}" name="${item.page_id}">
+          <h3>${item.name}</h3>
+          <p>${item.description}</p>
+          <div class="posts">
+          </div>
+          </div>`);
+      });
+
+      navigationContent.data.posts.forEach(function (post) {
+        var findExpression = '.olympPage[name="' + post.page_id + '"]';
+        var $page = $('.pages').find(findExpression);
+        $page.find('.posts')
+        .prepend(`<div item_id="${post.id}" class="post editable">${post.Value}</div>`);
+      });
     },
 
     initHeaderNavigation: function () {
@@ -119,8 +141,10 @@ var navigationContent = (function () {
 
       data.forEach(function (item) {
         if (item.page_id != null && item.page_id.length > 0) {
-          navigationContent.$pages.append(`<div class="page editable container" level="${level}"
-            item_id="${item.id}" name="${item.page_id}"/>`);
+          navigationContent.$pages.find('.container').first()
+          .append(`<div class="page editable hidden" level="${level}"
+            item_id="${item.id}" name="${item.page_id}"><div class="posts">
+          </div></div>`);
         }
 
         navigationContent.createRelatedPages(item.children, level + 1);
@@ -128,10 +152,13 @@ var navigationContent = (function () {
     },
 
     initPagesContent: function () {
-      navigationContent.data.posts.forEach(function (post) {
+      navigationContent.data.posts.forEach(function (post, index) {
         var findExpression = '[name="' + post.page_id + '"]';
         var $page = $('.pages').find(findExpression);
-        $page.prepend(`<div item_id="${post.id}" class="post editable">${post.Value}</div>`);
+        $page.find('.posts')
+        .prepend(`<div item_id="${post.id}" event_id="${post.event_id}"
+          class="post editable ${post.Type}">
+          ${post.Value}</div>`);
       });
     }
   };

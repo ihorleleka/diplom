@@ -17,7 +17,7 @@ var singlePageNavigation = (function () {
     },
 
     bindEvents: function () {
-      $('a[dest]').click(function (event) {
+      $('body').on('click', 'a[dest]', function (event) {
         event.preventDefault();
         let nameOfPageToRedirect = $(this).attr('dest');
         let findExpression = '[name="' + nameOfPageToRedirect + '"]';

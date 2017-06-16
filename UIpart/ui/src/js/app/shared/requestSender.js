@@ -29,6 +29,14 @@ var requestSender = (function () {
       PubSub.subscribe('deletePost', requestSender.deletePost);
       PubSub.subscribe('updatePost', requestSender.updatePost);
       PubSub.subscribe('deleteFiles', requestSender.deleteFiles);
+      PubSub.subscribe('createEvent', requestSender.createEvent);
+      PubSub.subscribe('getAllEvents', requestSender.getAllEvents);
+      PubSub.subscribe('deleteEvent', requestSender.deleteEvent);
+      PubSub.subscribe('publishEvent', requestSender.publishEvent);
+      PubSub.subscribe('beginRegistration', requestSender.beginRegistration);
+      PubSub.subscribe('endRegistration', requestSender.endRegistration);
+      PubSub.subscribe('archiveEvent', requestSender.archiveEvent);
+      PubSub.subscribe('olympRegistration', requestSender.olympRegistration);
     },
 
     registrationHandler: function (msg, data) {
@@ -170,12 +178,62 @@ var requestSender = (function () {
     },
 
     deleteFiles: function (msg, data) {
-      AjaxService.post('php/deleteFiles.php', data)
+      AjaxService.post('php/deleteFiles.php', data);
+    },
+
+    createEvent: function (msg, data) {
+      AjaxService.post('php/createEvent.php', data)
       .done(function (msg) {
-        PubSub.publishSync('deleteFilesSuccess', msg);
-      })
-      .fail(function (xhr, status, error) {
-        PubSub.publishSync('deleteFilesFail', { xhr: xhr, status: status, error: error });
+        PubSub.publishSync('createEventSuccess', { msg: msg, data: data });
+      });
+    },
+
+    getAllEvents: function (msg, data) {
+      AjaxService.post('php/getAllEvents.php', data)
+      .done(function (msg) {
+        PubSub.publishSync('eventsInfoReceived', msg);
+      });
+    },
+
+    deleteEvent: function (msg, data) {
+      AjaxService.post('php/deleteEvent.php', data)
+      .done(function (msg) {
+        PubSub.publishSync('deleteEventSuccess', msg);
+      });
+    },
+
+    publishEvent: function (msg, data) {
+      AjaxService.post('php/publishEvent.php', data)
+      .done(function (msg) {
+        PubSub.publishSync('publishEventSuccess', msg);
+      });
+    },
+
+    beginRegistration: function (msg, data) {
+      AjaxService.post('php/beginRegistration.php', data)
+      .done(function (msg) {
+        PubSub.publishSync('registrationStateChanged', msg);
+      });
+    },
+
+    endRegistration: function (msg, data) {
+      AjaxService.post('php/endRegistration.php', data)
+      .done(function (msg) {
+        PubSub.publishSync('registrationStateChanged', msg);
+      });
+    },
+
+    archiveEvent: function (msg, data) {
+      AjaxService.post('php/archiveEvent.php', data)
+      .done(function (msg) {
+        PubSub.publishSync('archiveEventSuccess', msg);
+      });
+    },
+
+    olympRegistration: function (msg, data) {
+      AjaxService.post('php/olympRegistration.php', data)
+      .done(function (msg) {
+        PubSub.publishSync('olympRegistrationSuccess', msg);
       });
     }
   };

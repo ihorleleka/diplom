@@ -464,29 +464,27 @@ section {
   }
 }
 
-.quote-panel-background {
-  .custom-select-wrapper {
-    select {
-      border-radius: 0;
-      padding: 10px;
-      cursor: pointer;
-      background: #fbfbfb;
-      margin-bottom: 10px;
-      font-size: 16px;
-      width: 100%;
-      font-weight: 400;
-      height: 41px;
-      color: #00335B;
-      text-indent: .01px;
-      box-shadow: 0 10px 70px -10px #666;
-    }
-    i {
-      position: absolute;
-      top: 43px;
-      right: 25px;
-      pointer-events: none;
-      font-size: 8px;
-    }
+.custom-select-wrapper {
+  select {
+    border-radius: 0;
+    padding: 10px;
+    cursor: pointer;
+    background: #fbfbfb;
+    margin-bottom: 10px;
+    font-size: 16px;
+    width: 100%;
+    font-weight: 400;
+    height: 41px;
+    color: #00335B;
+    text-indent: .01px;
+    box-shadow: 0 10px 70px -10px #666;
+  }
+  i {
+    position: absolute;
+    top: 43px;
+    right: 25px;
+    pointer-events: none;
+    font-size: 8px;
   }
 }
 

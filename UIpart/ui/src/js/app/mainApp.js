@@ -14,11 +14,13 @@ var requestSender = require('./shared/requestSender.js');
 var accountService = require('./shared/accountService.js');
 var becomeTrainer = require('./shared/becomeTrainer.js');
 var editMode = require('./shared/editMode.js');
+var olymp = require('./shared/olymp.js');
 
 class MainApp {
   static run (mode) {
     $(function () {
       if ($('.main-navigation').length) {
+        requestSender.init();
         navigationContent.init().then(function () {
           if ($('.mobile-navigation').length) {
             sideNavigation.init();
@@ -38,10 +40,10 @@ class MainApp {
             registration.init();
             login.init();
             feedBack.init();
-            requestSender.init();
             accountService.init();
             becomeTrainer.init();
             editMode.init();
+            olymp.init();
           }
         });
       }

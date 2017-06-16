@@ -8,7 +8,7 @@ var editMode = (function () {
   var editMode = {
     addNewPostTemplate: `<div class="row addNewPost">
         <div class="col-md-3 col-md-offset-3 col-xs-6 col-xs-offset-0">
-        <a title="Створити новий запис" class="addPost"><i class="icon-hospital-ver-2"></i></a>
+        <a title="Створити новий запис" class="addPost"><i class="icon-addition"></i></a>
         </div>
         <div class="col-md-3 col-xs-6 col-xs-offset-0">
         <a title="Завантажити документи на сторінку" class="addFilePost">
@@ -46,10 +46,7 @@ var editMode = (function () {
       PubSub.subscribe('createSubCategorySuccess', editMode.reload);
       PubSub.subscribe('deleteSubCategorySuccess', editMode.reload);
       PubSub.subscribe('createPostSuccess', editMode.createPostSuccess);
-      PubSub.subscribe('updatePostSuccess', editMode.updatePostSuccess);
-    },
-
-    updatePostSuccess: function (msg, data) {
+      PubSub.subscribe('olympPagesEdit', editMode.olympPagesEdit);
     },
 
     reload: function () {
@@ -147,13 +144,13 @@ var editMode = (function () {
 
     addDivisionButtonsInit: function () {
       $('.primary').append(`<li class="edit">
-        <a title="Створити нову категорію"><i class="icon-hospital-ver-2"/></li>`);
+        <a title="Створити нову категорію"><i class="icon-addition"/></li>`);
       $('.sub-navigation-inner .sub-category')
       .append(`<li class="edit third-level">
-        <a title="Створити новий підрозділ"><i class="icon-hospital-ver-2"></i></li>`);
+        <a title="Створити новий підрозділ"><i class="icon-addition"></i></li>`);
       $('.sub-navigation-inner')
       .append(`<ul class="sub-category" style="max-height: initial;"><li class="edit topic">
-        <a title="Створити новий розділ"><i class="icon-hospital-ver-2"></i></li></ul>`);
+        <a title="Створити новий розділ"><i class="icon-addition"></i></li></ul>`);
       editMode.addTopicToEmptyCategory($('a.category'));
     },
 
@@ -248,16 +245,23 @@ var editMode = (function () {
               <div class="sub-navigation-inner" item_id="${$element.attr('item_id')}">
                 <ul class="sub-category" style="max-height: initial;">
                   <li class="edit topic">
-                    <a title="Створити новий розділ"><i class="icon-hospital-ver-2"></i></a>
+                    <a title="Створити новий розділ"><i class="icon-addition"></i></a>
                   </li>
                 </ul>
               </div>
             </div>`;
     },
 
+    olympPagesEdit: function () {
+      if (sessionStorage.getItem('mode') === 'edit') {
+        editMode.removePostsFunctionality();
+        editMode.addPostsFunctionality();
+      }
+    },
+
     addPostsFunctionality: function () {
-      $('.page.editable').prepend(editMode.addNewPostTemplate);
-      $('.page.editable .post.editable').each(function (index, post) {
+      $('.page.editable .posts').prepend(editMode.addNewPostTemplate);
+      $('.page.editable .posts .post.editable').each(function (index, post) {
         var $post = $(post);
         if (!($post.find('.postIteractoins').length > 0)) {
           $post.append(editMode.postIteractionsTemplate);
@@ -278,12 +282,12 @@ var editMode = (function () {
 
     bindAddPostsEvents: function () {
       $('a.addPost').click(function () {
-        var $currentPage = $(this).parent().parent().parent();
+        var $currentPage = $(this).parent().parent().parent().parent();
         editMode.removePostsFunctionality();
         var level = $currentPage.attr('level');
         var pageId = $currentPage.attr('name');
         if (!($currentPage.find(`#${level + pageId}`).length > 0)) {
-          $currentPage.prepend(`<div id="${level + pageId}"/>`);
+          $currentPage.find('.posts').prepend(`<div id="${level + pageId}"/>`);
         }
 
         var editor = CKEDITOR.appendTo(level + pageId);
@@ -291,7 +295,7 @@ var editMode = (function () {
         var $tag = $currentPage.find('.row.addNewPost .addPost');
 
         $tag.click(function () {
-          var $currentPage = $(this).parent().parent().parent();
+          var $currentPage = $(this).parent().parent().parent().parent();
           var level = $currentPage.attr('level');
           var pageId = $currentPage.attr('name');
           var instance = editMode.current(CKEDITOR.instances);
@@ -321,7 +325,7 @@ var editMode = (function () {
       var htmlToInsert = data.data;
       var findExpression = '[name="' + pageId + '"]';
       var $page = $('.pages').find(findExpression);
-      $page.prepend(`<div item_id="${data.postId}"
+      $page.find('.posts').prepend(`<div item_id="${data.postId}"
         class="post editable">${htmlToInsert}</div>`);
       editMode.addPostsFunctionality();
     },
@@ -377,7 +381,7 @@ var editMode = (function () {
 
     bindFilesUploadEvents: function () {
       $('.addFilePost').click(function () {
-        var $page = $(this).parent().parent().parent();
+        var $page = $(this).parent().parent().parent().parent();
         var pageId = $page.attr('name');
         var $input = $(this).parent().find('input');
         $input.click();
