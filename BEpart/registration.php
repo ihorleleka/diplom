@@ -71,7 +71,7 @@ if ($add) {//the user was added to the database
 
 function send_email ($info) {
     $server_name = $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'];
-    $link = 'http://'.$server_name.'/confirm.php?email='.$info['email'].'&key='.$info['key'];
+    $link = 'http://'.$server_name.'/php/confirm.php?email='.$info['email'].'&key='.$info['key'];
     $to = $info['email'];
     $subject = 'Registration Confirmation';
     $message = $info['username'] . ', Вам необхідно підтвердити реєстрацію. <br>';

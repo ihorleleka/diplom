@@ -11,7 +11,7 @@ mysql_query('SET NAMES UTF8');
 
 $categoryName = $_POST['name'];
 
-mysql_query("INSERT INTO `pages` (`title`) VALUES ('')");
+mysql_query("INSERT INTO `pages` (`id`) VALUES (NULL)");
 $pageId = mysql_insert_id();
 mysql_query("INSERT INTO `categories` (`id`, `name`, `page_id`, `reserved`) VALUES (NULL, '$categoryName', '$pageId', 0x30)");
 

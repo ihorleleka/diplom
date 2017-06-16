@@ -9,16 +9,20 @@ mysql_select_db($dbname) or die("I couldn't find the database table make sure it
 
 mysql_query('SET NAMES UTF8');
 
-$name = $_POST['name'];
-$topicId = $_POST['topicId'];
+$eventId = $_POST['eventId'];
 
-mysql_query("INSERT INTO `pages` (`id`) VALUES (NULL)");
-$pageId = mysql_insert_id();
-mysql_query("INSERT INTO `subcategory` (`id`, `parent_id`, `name`, `page_id`, `reserved`) VALUES (NULL, '$topicId', '$name', '$pageId', 0x30)");
+mysql_query("UPDATE `events` SET `registration` = 1 WHERE `events`.`id` = $eventId");
+
+$data = array();
+$events = mysql_query("SELECT * FROM `events`");
+
+while($event = mysql_fetch_assoc($events)) {
+  $data[] = $event;
+}
 
 $action['result'] = 'success';
-array_push($action,'User data updated.');
+array_push($action,'Registration started.');
 header('HTTP/1.1 200');
 header('Content-Type: application/json; charset=UTF-8');
-echo json_encode($action);
+echo json_encode($data);
 ?>

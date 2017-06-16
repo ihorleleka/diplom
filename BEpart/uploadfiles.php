@@ -20,3 +20,4 @@ if(isset( $_GET['uploadfiles'])) {
     $data = $error ? array('error' => 'Ошибка загрузки файлов.') : array('files' => $files ); 
     echo json_encode( $data );
 }
+?>

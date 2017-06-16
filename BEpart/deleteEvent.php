@@ -9,15 +9,15 @@ mysql_select_db($dbname) or die("I couldn't find the database table make sure it
 
 mysql_query('SET NAMES UTF8');
 
-$name = $_POST['name'];
-$topicId = $_POST['topicId'];
+$pageId = $_POST['pageId'];
+$id = $_POST['id'];
 
-mysql_query("INSERT INTO `pages` (`id`) VALUES (NULL)");
-$pageId = mysql_insert_id();
-mysql_query("INSERT INTO `subcategory` (`id`, `parent_id`, `name`, `page_id`, `reserved`) VALUES (NULL, '$topicId', '$name', '$pageId', 0x30)");
+mysql_query("DELETE FROM `events` WHERE `id` = '$id' LIMIT 1") or die(mysql_error());
+mysql_query("DELETE FROM `pages` WHERE `id` = '$pageId' LIMIT 1") or die(mysql_error());
+mysql_query("DELETE FROM `posts` WHERE `event_id` = '$id' LIMIT 1") or die(mysql_error());
 
 $action['result'] = 'success';
-array_push($action,'User data updated.');
+array_push($action,'Deleted.');
 header('HTTP/1.1 200');
 header('Content-Type: application/json; charset=UTF-8');
 echo json_encode($action);

@@ -17,18 +17,35 @@ $result = mysql_query("SELECT * FROM users WHERE id = '$id'");
 $rolesResult = mysql_query("SELECT * FROM user_roles WHERE user_id = '$id'");
 
 $additionalInfo = mysql_query("SELECT * FROM users_additional_info WHERE user_id = '$id'");
+$participants = mysql_query("SELECT * FROM participants WHERE user_id = '$id'");
+$pending = mysql_query("SELECT * FROM pending WHERE user_id = '$id'");
 
 $action = array();
 $action['result'] = null;
 
 $info = mysql_fetch_assoc($result);
+
 $rolesInfo = array();
 while($roleInfo = mysql_fetch_assoc($rolesResult)) 
 {
     $rolesInfo[] = $roleInfo;
 }
+
+$participantsInfo = array();
+while($participant = mysql_fetch_assoc($participants)) 
+{
+    $participantsInfo[] = $participant;
+}
+
+$pendingInfo = array();
+while($pendingUser = mysql_fetch_assoc($pending)) 
+{
+    $pendingInfo[] = $pendingUser;
+}
 $info['roles'] = $rolesInfo;
 $info['additionalInfo'] = mysql_fetch_assoc($additionalInfo);
+$info['participants'] = $participantsInfo;
+$info['pending'] = $pendingInfo;
 $action['result'] = 'success';
 array_push($action,'Thanks for signing up.');
 header('HTTP/1.1 200');
