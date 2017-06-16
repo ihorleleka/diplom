@@ -102,6 +102,35 @@ var olymp = (function () {
       <span>Прийняти участь</span>
       <i class="icon icon-login"></i>
     </button></div></div>`,
+    firstPlace: `<div class="col-md-4 col-xs-12">
+    <label for="title">I місце</label>
+    <div class="custom-select-wrapper input-group">
+      <i class="icon-chevron-down"></i>
+      <select selected="false" class="first-place">
+      <option value="" disabled="" selected="">Оберіть переможця</option>
+    </div></div>`,
+    secondPlace: `<div class="col-md-4 col-xs-12">
+    <label for="title">II місце</label>
+    <div class="custom-select-wrapper input-group">
+      <i class="icon-chevron-down"></i>
+      <select selected="false" class="second-place">
+      <option value="" disabled="" selected="">II місце</option>
+    </div></div>`,
+    thirdPlace: `<div class="col-md-4 col-xs-12">
+    <label for="title">III місце</label>
+    <div class="custom-select-wrapper input-group">
+      <i class="icon-chevron-down"></i>
+      <select selected="false" class="third-place">
+      <option value="" disabled="" selected="">III місце</option>
+    </div></div>`,
+    publishWinnersButton: `<div class="col-xs-12 publishWinners">
+          <div class="buttons-block">
+          <button class="publishWinnersButton">
+            <span>Оголосити переможців</span>
+            <i class="icon icon-login"></i>
+          </button>
+          </div>
+        </div>`,
 
     init: function () {
       olymp.bindEvents();
@@ -291,10 +320,8 @@ var olymp = (function () {
           }
         }
 
-        if (!$event.hasClass('results')) {
-          $buttonsBlock.append(olymp.results);
-        }
-
+        $buttonsBlock.append(olymp.results);
+        olymp.bindPostResultsButton($event, pageId, $buttonsBlock, eventId);
         if (!$event.hasClass('archived')) {
           $buttonsBlock.append(olymp.archive);
           olymp.bindArchiveEvent($event, $buttonsBlock, eventId);
@@ -302,6 +329,61 @@ var olymp = (function () {
 
         $buttonsBlock.append(olymp.deleteEventTemplate);
         olymp.bindDeleteEvent($event, eventId, pageId);
+      });
+    },
+
+    bindPostResultsButton: function ($event, pageId, $buttonsBlock, eventId) {
+      $event.find('.results').click(function () {
+        $buttonsBlock.parent().remove();
+        $event.append(olymp.firstPlace);
+        var $select = $event.find('.first-place');
+        var event = olymp.eventsList.find(function (event) {
+          return event.id == eventId;
+        });
+
+        event.participants.forEach(function (participant) {
+          var value = participant.lastName + ' ' + participant.firstName
+          + ' ' + participant.fatherName;
+          olymp.selectAddOption(value, value, $select);
+        });
+
+        $select.change(function () {
+          $event.find('.second-place').remove();
+          $event.append(olymp.secondPlace);
+          var $secondPlaceSelect = $event.find('.second-place');
+          event.participants.forEach(function (participant) {
+            var value = participant.lastName + ' ' + participant.firstName
+            + ' ' + participant.fatherName;
+            olymp.selectAddOption(value, value, $secondPlaceSelect);
+          });
+
+          $secondPlaceSelect.change(function () {
+            $event.find('.third-place').remove();
+            $event.append(olymp.thirdPlace);
+            var $thirdPlaceSelect = $event.find('.third-place');
+            event.participants.forEach(function (participant) {
+              var value = participant.lastName + ' ' + participant.firstName
+              + ' ' + participant.fatherName;
+              olymp.selectAddOption(value, value, $thirdPlaceSelect);
+            });
+
+            $thirdPlaceSelect.change(function () {
+              $event.find('.publishWinners').remove();
+              $event.append(olymp.publishWinnersButton);
+              $event.find('.publishWinnersButton').click(function () {
+                var data = `<h4>Вітаємо переможців!!!</h4>
+                <ul>
+                <li>I місце - ${$select.val()}</li>
+                <li>II місце - ${$secondPlaceSelect.val()}</li>
+                <li>III місце - ${$thirdPlaceSelect.val()}</li>
+                </ul>`;
+                PubSub.publishSync('createPost', { pageId: pageId, data: data });
+                $(`.page[dest="${pageId}"]`).find('.posts').prepend(data);
+                olymp.rebuildEventsPage();
+              });
+            });
+          });
+        });
       });
     },
 
