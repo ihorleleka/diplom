@@ -59,7 +59,8 @@ var accountService = (function () {
 
     additionalInfoBlockHandle: function () {
       if (accountService.isInRole(accountService.userInfo.roles, '1') ||
-        accountService.isInRole(accountService.userInfo.roles, '2')) {
+        accountService.isInRole(accountService.userInfo.roles, '2') ||
+        accountService.isInRole(accountService.userInfo.roles, '3')) {
         $('.page.userAddInfo').remove();
         $('a[dest="userAddInfo"]').remove();
       }

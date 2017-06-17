@@ -17,11 +17,20 @@ $firstName = $_POST['firstName'];
 $lastName = $_POST['lastName'];
 $fatherName = $_POST['fatherName'];
 $email = $_POST['email'];
-$birthDate = $additionalInfoArray['dateOfBirth'];
-$trainerId = $additionalInfoArray['trainer_id'];
-$studyPlace = $additionalInfoArray['studyPlace'];
-$additionalInfo = $additionalInfoArray['additionalInfo'];
-$telephone = $additionalInfoArray['telephone'];
+
+$birthDate='';
+$trainerId = '';
+$studyPlace = '';
+$additionalInfo = '';
+$telephone = '';
+
+if ($additionalInfoArray != 'false') {
+    $birthDate = $additionalInfoArray['dateOfBirth'];
+    $trainerId = $additionalInfoArray['trainer_id'];
+    $studyPlace = $additionalInfoArray['studyPlace'];
+    $additionalInfo = $additionalInfoArray['additionalInfo'];
+    $telephone = $additionalInfoArray['telephone'];
+}
 
  mysql_query("UPDATE `users` SET `firstName` = '$firstName', `lastName` = '$lastName', `fatherName` = '$fatherName', `email` = '$email' WHERE `users`.`id` = $currentUserId");
 
@@ -30,7 +39,7 @@ $result = mysql_query("SELECT * FROM users_additional_info WHERE user_id = '$cur
 if(mysql_fetch_assoc($result))
 {
     mysql_query("UPDATE `users_additional_info` SET `user_id` = '$currentUserId',`telephone` = '$telephone', `dateOfBirth` = '$birthDate', `trainer_id` = '$trainerId', `studyPlace` = '$studyPlace', `additionalInfo` = '$additionalInfo' WHERE `users_additional_info`.`user_id` = $currentUserId");
-} else {
+} else if ($additionalInfoArray != 'false') {
     mysql_query("INSERT INTO `users_additional_info` (`user_id`, `telephone`, `dateOfBirth`, `trainer_id`, `studyPlace`, `additionalInfo`) VALUES ('$currentUserId', '$telephone','$birthDate', '$trainerId', '$studyPlace', '$additionalInfo')");
 }
 
