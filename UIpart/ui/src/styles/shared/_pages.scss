@@ -170,6 +170,10 @@
             }
         }
         .event, .publishedEvent, .archivedEvent  {
+            margin: 10px 0;          
+            h4 {
+                margin: 0;
+            }
             .publishEventApprove, .archiveEventApprove {
                 button {
                     width: 100% !important;

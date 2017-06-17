@@ -131,6 +131,7 @@ var olymp = (function () {
           </button>
           </div>
         </div>`,
+    profileOlympInfo: `<h4>Олімпіади</h4>`,
 
     init: function () {
       olymp.bindEvents();
@@ -187,6 +188,7 @@ var olymp = (function () {
 
       olymp.manageRegistrationButtons();
       olymp.addListOfParticipants();
+      olymp.profileOlympInit();
     },
 
     filterDivisions: function () {
@@ -486,6 +488,55 @@ var olymp = (function () {
           });
         });
       });
+    },
+
+    profileOlympInit: function () {
+      var $profilePage = $('.page.profile');
+      var $infoBlock = $profilePage.find('.row .col-xs-12').first();
+      if (olymp.userInfo.pending.length > 0 || olymp.userInfo.participants.length > 0) {
+        var pendingHtml = '';
+        var participantHtml = '';
+        olymp.userInfo.pending.forEach(function (item) {
+          olymp.eventsList.forEach(function (event) {
+            if (event.archived != '1' && event.id == item.event_id) {
+              pendingHtml += `<div item_id="${event.id}" class="olymp event row">
+                              <div class="col-xs-12 event-info">
+                                <h4>${event.name}</h4>
+                                <span>${event.description}</span>
+                                <a dest="${event.page_id}">Перейти до сторінки олімпіади</a>
+                              </div>
+                      </div>`;
+            }
+          });
+        });
+
+        olymp.userInfo.participants.forEach(function (item) {
+          olymp.eventsList.forEach(function (event) {
+            if (event.archived != '1' && event.id == item.event_id) {
+              participantHtml += `<div item_id="${event.id}" class="olymp event row">
+                              <div class="col-xs-12 event-info">
+                                <h4>${event.name}</h4>
+                                <span>${event.description}</span>
+                                <a dest="${event.page_id}">Перейти до сторінки олімпіади</a>
+                              </div>
+                      </div>`;
+            }
+          });
+        });
+
+        if (pendingHtml.length > 0 || participantHtml.length > 0) {
+          $infoBlock.append(olymp.profileOlympInfo);
+          if (participantHtml.length > 0) {
+            $infoBlock.append('<label>Зареєстрований:</label>');
+            $infoBlock.append(participantHtml);
+          }
+
+          if (pendingHtml.length > 0) {
+            $infoBlock.append('<label>Очікується підтвердження від тренера:</label>');
+            $infoBlock.append(pendingHtml);
+          }
+        }
+      }
     },
 
     manageRegistrationButtons: function () {
