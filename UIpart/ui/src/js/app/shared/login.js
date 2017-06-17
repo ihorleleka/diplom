@@ -10,17 +10,44 @@ var login = (function () {
       login.bindEvents();
       PubSub.subscribe('loginSuccess', login.loginSuccess);
       PubSub.subscribe('loginFail', login.loginFail);
+      $('.lostPassword').hide();
     },
 
     bindEvents: function () {
+      PubSub.subscribe('passwordResetLinkSent', login.reload);
+      PubSub.subscribe('passwordResetLinkSentFail', login.passwordResetLinkSentFail);
       $('.loginPage button.login').click(function (event) {
-        var pageForLogin = $(this).parents('.page');
-        if (validation.validatePage(pageForLogin) && !$(this).hasClass('clicked')) {
+        var $pageForLogin = $(this).parents('.page');
+        if (validation.validatePage($pageForLogin) && !$(this).hasClass('clicked')) {
           $(this).addClass('clicked');
-          var data = login.collectData(pageForLogin);
+          var data = login.collectData($pageForLogin);
           PubSub.publishSync('loginAttempt', data);
+        } else {
+          $('.lostPassword').show();
         }
       });
+
+      $('.lostPasswordPage button.sendNewPass').click(function () {
+        var $page = $('.lostPasswordPage');
+        if (validation.validatePage($page) && !$(this).hasClass('clicked')) {
+          $(this).addClass('clicked');
+          var email = $page.find('.email').val();
+          PubSub.publishSync('forgotPassword', { email: email });
+          $('body').addClass('blured');
+        }
+      });
+    },
+
+    passwordResetLinkSentFail: function (msg, data) {
+      var $pageBottom = $('.lostPasswordPage .row .col-xs-12 .buttons-block');
+      $pageBottom.find('p').remove();
+      $pageBottom.prepend(`<p>${data.xhr.responseText}</p>`);
+      $('.lostPasswordPage button').removeClass('clicked');
+      $('body').removeClass('blured');
+    },
+
+    reload: function () {
+      location.reload();
     },
 
     collectData: function (page) {
@@ -35,9 +62,10 @@ var login = (function () {
     },
 
     loginFail: function (msg, data) {
+      $('.lostPassword').show();
       var $loginPageBottom = $('.loginPage .row .col-xs-12 .buttons-block');
       $loginPageBottom.find('p').remove();
-      $loginPageBottom.append(`<p>${data.xhr.responseText}</p>`);
+      $loginPageBottom.prepend(`<p>${data.xhr.responseText}</p>`);
       $('.loginPage button.login').removeClass('clicked');
     },
 

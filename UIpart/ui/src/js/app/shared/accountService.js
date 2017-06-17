@@ -167,6 +167,7 @@ var accountService = (function () {
       accountService.userInfo.lastName = $editParts.find('.surname').val();
       accountService.userInfo.fatherName = $editParts.find('.father_name').val();
       accountService.userInfo.email = $editParts.find('.email').val();
+      accountService.userInfo.newPassword = $editParts.find('.password').val();
       $('body').addClass('blured');
       PubSub.publishSync('updateUserData', accountService.userInfo);
     }

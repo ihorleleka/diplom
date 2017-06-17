@@ -37,6 +37,7 @@ var requestSender = (function () {
       PubSub.subscribe('endRegistration', requestSender.endRegistration);
       PubSub.subscribe('archiveEvent', requestSender.archiveEvent);
       PubSub.subscribe('olympRegistration', requestSender.olympRegistration);
+      PubSub.subscribe('forgotPassword', requestSender.forgotPassword);
     },
 
     registrationHandler: function (msg, data) {
@@ -234,6 +235,16 @@ var requestSender = (function () {
       AjaxService.post('php/olympRegistration.php', data)
       .done(function (msg) {
         PubSub.publishSync('olympRegistrationSuccess', msg);
+      });
+    },
+
+    forgotPassword: function (msg, data) {
+      AjaxService.post('php/forgotPassword.php', data)
+      .done(function (msg) {
+        PubSub.publishSync('passwordResetLinkSent', msg);
+      })
+      .fail(function (xhr, status, error) {
+        PubSub.publishSync('passwordResetLinkSentFail', { xhr: xhr, status: status, error: error });
       });
     }
   };
