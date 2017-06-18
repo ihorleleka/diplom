@@ -25,10 +25,11 @@ if($action['result'] != 'error'){
     $user=mysql_fetch_assoc($user);
     $firstName = $user['firstName'];
     $lastName = $user['lastName'];
+    $currentPass = $user['password'];
 
     $checkKey = md5($firstName . $lastName);
     if ($checkKey == $key) {
-        $password = md5($lastName . $firstName . $lastName);
+        $password = md5($currentPass . $firstName . $lastName);
         $password = substr($password, 1, 8);
         $pass = md5($password);
         mysql_query("UPDATE `users` SET `password` = '$pass' WHERE email = '$email'") or die(mysql_error());
