@@ -179,19 +179,6 @@
                     max-width: 100%;
                 }
             }
-            span {
-                max-width: 79%;
-                display: inline-block;
-                @media (max-width: $screen-md-max) {
-                     max-width: 70%;
-                }
-                @media (max-width: $screen-sm-max) {
-                     max-width: 65%;
-                }
-                @media (max-width: $screen-xs-max) {
-                      max-width: 100%;
-                }
-            }
             .publishEventApprove, .archiveEventApprove {
                 button {
                     width: 100% !important;
@@ -258,6 +245,19 @@
                 text-align: left;
                 @media (max-width: $screen-xs-max) {
                     text-align: center;
+                }
+                span {
+                    max-width: 79%;
+                    display: inline-block;
+                    @media (max-width: $screen-md-max) {
+                         max-width: 70%;
+                    }
+                    @media (max-width: $screen-sm-max) {
+                         max-width: 65%;
+                    }
+                    @media (max-width: $screen-xs-max) {
+                          max-width: 100%;
+                    }
                 }
                 a {
                     float: right;
