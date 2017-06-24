@@ -10,6 +10,7 @@ var olymp = (function () {
     divisions: null,
     eventsList: null,
     userInfo: null,
+    inited: false,
     olympControlButtonTemplate: `<a dest="olympControl">
           <button>
               <span>Управління олімпіадами</span>
@@ -146,12 +147,6 @@ var olymp = (function () {
       PubSub.subscribe('publishEventSuccess', olymp.reload);
       PubSub.subscribe('archiveEventSuccess', olymp.reload);
       PubSub.subscribe('registrationStateChanged', olymp.registrationStateChanged);
-      $('body').one('click', function () {
-        if (olymp.userInfo != null) {
-          olymp.initOlymp();
-          PubSub.publishSync('olympPagesEdit');
-        }
-      });
     },
 
     reload: function () {
@@ -161,10 +156,16 @@ var olymp = (function () {
     userInfoReceived: function (msg, data) {
       olymp.userInfo = data;
       olymp.roles = data.roles;
+      if (olymp.divisions != null && olymp.eventsList != null) {
+        olymp.initOlymp();
+      }
     },
 
     getDivisionsSuccess: function (msg, data) {
       olymp.divisions = data;
+      if (olymp.userInfo != null && olymp.eventsList != null) {
+        olymp.initOlymp();
+      }
     },
 
     isInRole: function (roles, roleId) {
@@ -179,16 +180,20 @@ var olymp = (function () {
     },
 
     initOlymp: function () {
-      if (olymp.isInRole(olymp.roles, '1')) {
-        olymp.continueInit();
-      } else if (olymp.isInRole(olymp.roles, '2')) {
-        olymp.filterDivisions();
-        olymp.continueInit();
-      }
+      if (!olymp.inited) {
+        PubSub.publishSync('olympPagesEdit');
+        olymp.inited = true;
+        if (olymp.isInRole(olymp.roles, '1')) {
+          olymp.continueInit();
+        } else if (olymp.isInRole(olymp.roles, '2')) {
+          olymp.filterDivisions();
+          olymp.continueInit();
+        }
 
-      olymp.manageRegistrationButtons();
-      olymp.addListOfParticipants();
-      olymp.profileOlympInit();
+        olymp.manageRegistrationButtons();
+        olymp.addListOfParticipants();
+        olymp.profileOlympInit();
+      }
     },
 
     filterDivisions: function () {
@@ -269,6 +274,9 @@ var olymp = (function () {
 
     eventsInfoReceived: function (msg, data) {
       olymp.eventsList = data;
+      if (olymp.userInfo != null && olymp.divisions != null) {
+        olymp.initOlymp();
+      }
     },
 
     handleEvent: function (event) {

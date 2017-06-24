@@ -47,7 +47,7 @@ class PubSubScenarioWhenAwaitStep {
         }
       }
 
-      console.log('done', this.action);
+      //console.log('done', this.action);
 
       this.state = PubSubScenarioState.STOPPED;
       this.resolve();
@@ -144,7 +144,7 @@ class PubSubScenarioTaskScheduler {
             resolve(result);
           }, PUBSUB_SCENARIO_TASK_QUEUE_DELAY);
         } catch (err) {
-          console.log(err);
+          //console.log(err);
           reject(err);
         }
       }, PUBSUB_SCENARIO_TASK_QUEUE_DELAY);
