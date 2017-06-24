@@ -167,6 +167,9 @@
                 margin: auto;
                 list-style-type: circle;
                 list-style-position: inside;
+                p {
+                    display: inline-block;
+                }
             }
         }
         .event, .publishedEvent, .archivedEvent  {
